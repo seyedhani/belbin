@@ -14,7 +14,7 @@ def read_specific_lines(filename, line_numbers):
   return selected_lines
 def q ():
     return uniq(1,8)
-def a_al():
+def a_al():                                   
        results = []
        start = 8
        end = 64
@@ -23,21 +23,22 @@ def a_al():
            start += 8
        return results
 def check(arr):
-    res = sum(arr)
-    if res > 10 :
+    res = sum(arr)                                     
+    if res > 10 :                           
         v = True
-    else:
+    else:                       
+        
         v = False
         
     return v    
         
 def p_q (): 
-    qous = q()
+    main_qouestions = q()
     qs_a = a_al()
-    all_sce = []
-    for i in range(len(qous)):
+    all_scores = []
+    for i in range(len( main_qouestions)):
         points = []
-        print(qous[i][::-1])
+        print( main_qouestions[i][::-1])
         for j in range(8):
             print(qs_a[i][j][::-1])
             txt_1 = "از یک تا ده امتیاز وارد کنید:"[::-1]
@@ -54,8 +55,8 @@ def p_q ():
             print(qs_a[i][change][::-1])
             new_s = int(input('?  '))
             points[change] = new_s
-        all_sce.append(points)
-    return all_sce        
+        all_scores.append(points)
+    return all_scores        
             
 def col_s(arr):
     c_1 = arr[0][6]+ arr[1][0] + arr[2][7]+ arr[3][3] +arr[4][1] +arr[5][5] +arr[6][4] 
@@ -91,11 +92,7 @@ def maximm(cs , all_sce):
         cs = col_s(all_sce)
         m = max(cs )
         q = cs.count(m)
-    for i in cs:
-        if cs[i]== m:
-            awn = i
-            return awn 
-
+    awn = cs.index(m)
     return awn
 def result(numb ):
     rlls = rolls()
@@ -104,63 +101,15 @@ def result(numb ):
     txt_b = "ویزگی ها "[::-1]
     txt_c ="نقاط ضعف قابل تحمل"[::-1]
     txt_d = "مشوق ها "[::-1] 
-    
-    if numb == 0:
-        print(txt_a)
-        print('\n')
-        print(rlls[0])
-        print(txt_b)
-        print('\n')
-        print(vi[0])        
-    elif numb == 1 :
-        print(txt_a)
-        print('\n')
-        print(rlls[1])
-        print(txt_b)
-        print('\n')
-        print(vi[1])
-    elif numb== 2:
-        print(txt_a)
-        print('\n')
-        print(rlls[2])
-        print(txt_b)
-        print('\n')
-        print(vi[2])  
-    elif numb == 3:
-        print(txt_a)
-        print('\n')
-        print(rlls[3])
-        print(txt_b)
-        print('\n')
-        print(vi[3])     
-    elif numb == 4:
-        print(txt_a)
-        print('\n')
-        print(rlls[4])
-        print(txt_b)
-        print('\n')
-        print(vi[4])
-    elif numb == 5:
-        print(txt_a)
-        print('\n')
-        print(rlls[5])
-        print(txt_b)
-        print('\n')
-        print(vi[5])                    
-    elif numb == 6:
-        print(txt_a)
-        print('\n')
-        print(rlls[6])
-        print(txt_b)
-        print('\n')
-        print(vi[6])    
-    elif numb == 7:
-        print(txt_a)
-        print('\n')
-        print(rlls[7])
-        print(txt_b)
-        print('\n')
-        print(vi[7])          
+    for i in range(8):  # Assuming you have 8 elements in your lists
+       if numb == i:
+           print(txt_a)
+           print('\n')
+           print(rlls[i])
+           print(txt_b)
+           print('\n')
+           print(vi[i])
+           break  # Exit the loop after finding a match
 while True:
     txt = "برای شرکت در ازمون کلیک کنید:"[::-1]
     print(txt)
@@ -176,3 +125,4 @@ while True:
             c =  maximm(b , a)
             print(c)
             result(c)
+            
