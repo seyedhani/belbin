@@ -5,6 +5,7 @@ def read_specific_lines(filename, line_numbers):
         lines = f.readlines()
         selected_lines = [lines[i - 1].strip() for i in line_numbers]
     return selected_lines
+#this is a def to read q from file
 def uniq(x, y):
     file_path = 'all_Q.txt'
     line_numbers_to_read = list(range(x, y))
