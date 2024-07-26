@@ -4,8 +4,8 @@ def read_specific_lines(filename, line_numbers):
     with open(filename, 'r', encoding='utf-8') as f:
         lines = f.readlines()
         selected_lines = [lines[i - 1].strip() for i in line_numbers]
-    return 
-#this is a def to read q from file
+    return selected_lines
+#this is a def to read q from
 def uniq(x, y):
     file_path = 'all_Q.txt'
     line_numbers_to_read = list(range(x, y))
@@ -106,7 +106,7 @@ def result(numb):
     txt_b = "ویزگی ها "[::-1]
     if 0 <= numb < len(rlls):
         print(f"{txt_a}\n\n{rlls[numb]}\n{txt_b}\n\n{vi[numb]}")
-#the main def
+
 def main():
     while True:
         txt = "برای شرکت در ازمون کلیک کنید:"[::-1]
