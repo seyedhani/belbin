@@ -1,41 +1,32 @@
 import sqlite3
-def sql_connector(path):
-    con = sqlite3.connect(path)
+
+# Function to connect to the SQLite database
+def sql_connector(db_name):
+    con = sqlite3.connect(db_name)
     cur = con.cursor()
-    return con , cur
-def creat_table(command , con , cur):
-    cur.execute(command)
+    return con, cur
+
+# Function to create a table in the database
+def create_table(cur, table_name):
+    create_table_command = f"""
+    CREATE TABLE IF NOT EXISTS qouestins_p_{table_name} (
+        id INTEGER PRIMARY KEY,
+        data TEXT
+    );
+    """
+    cur.execute(create_table_command)
+
+# Main execution
+if __name__ == "__main__":
+    # Connect to the SQLite database (or create it if it doesn't exist)
+    con, cur = sql_connector("belbin.db")
+    table_name = f"main"
+    # Create 8 tables with names table_1, table_2, ..., table_8
+    for i in range(1, 8):
+        create_table(cur, table_name)
+        table_name = f"part_{i}"
+        # print(f"Created table: {table_name}")
+
+    # Commit changes and close the connection
     con.commit()
-def insert(com , con , cur, entity):
-    cur.execute(com, entity)
-    con.commit()
-def read_specific_lines(filename, line_numbers):
-    with open(filename, 'r', encoding='utf-8') as f:
-        lines = f.readlines()
-        selected_lines = [lines[i ].strip() for i in line_numbers]
-    return selected_lines 
-def uniq(x, y):
-    file_path = 'all_Q.txt'
-    line_numbers_to_read = list(range(x, y))
-    return read_specific_lines(file_path, line_numbers_to_read)   
-def qoues(i):
-    return uniq(i, i+1)[::-1] 
-def fileToStr():
-    qouestions = [ ]
-    for i in range(7):
-        q = qoues(i)
-        qouestions.append(q)
-    return qouestions
-def strToData(com , con , cur , arr):
-    for i in range(7):
-        numb = i + 1
-        txt = str(arr[i ])
-        entity = (numb , txt )
-        insert(com ,con , cur , entity)
-comm_a = "CREATE TABLE IF NOT EXISTS main_qousetions (id integer PRIMARY KEY , qoustin text )"
-com_a = "INSERT INTO main_qousetions  VALUES(? , ? )" 
-con , cur = sql_connector("alldata.db")
-creat_table(comm_a, con,cur)
-q = fileToStr()
-strToData(com_a,con , cur , q)
-comm_b = "CREATE TABLE IF NOT EXISTS qousetions (id integer PRIMARY KEY , qoustin text )"
+    con.close()
