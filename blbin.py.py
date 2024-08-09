@@ -1,274 +1,150 @@
-def vijegi():
-    v_1 = "منظم، قابل تکیه، محافظه کار و کارآ. ایده ها را تبدیل به عمل می کند. دارای عقل عملی است و سخت کوش است."   [::-1] 
-    v_2 ="آرام، مطمئن. اهداف را معین می کند، تصمیم گیری را تسهیل می کند و خوب کار نمایندگی گروه را انجام می دهد. این ظرفیت را دارد که بر حسب شایستگی ها رفتاری عادلانه و بدون تعصب از خود نشان دهد و ازتمام کمکها استقبال کند."[::-1]
-    v_3 ="چالش برانگیز. پویا. تحت فشار سخت تلاش بسیار می کند. انگیزه و شجاعت لازم را برای فائق آمدن بر موانع را داراست. با بی حرکتی و سکون، آدمهای از خود راضی و خود فریبی مبارزه می کند."[::-1]
-    v_4 = ' خلاق، مبتکر، ایده پرداز، غیراصول گرا. مشکلات سخت را حل می کند و ایده های تازه را مطرح می کند.'[::-1]
-    v_5 = " برون گرا، با شور و نشاط، کنجکاو، ارتباطی. دارای ظرفیت لازمه برای ارتباطات تازه و چیزهای نو. دارای توانایی برای پاسخگویی به یک چالش."[::-1]
-    v_6 = "، استراتژیک، با قدرت تشخیص. تمام گزینه ها و قضاوتها را به درستی در نظر می گیرد. بروندادها و اندیشه های گروهی را مورد ارزیابی قرار می دهد."[::-1]
-    v_7 = "اهل همکاری، ملایم، دارای توانایی درک شرایط و دیپلماتیک. خوب گوش می دهد، اصطکاک را دفع می کند، اوضاع را آرام می کند و می تواند مقوم کار گروهی باشد."[::-1]
-    v_8 = "سخت کوش، منظم، خودآگاه، مضطرب. دائم به دنبال خطاهاست. سروقت تحویل می دهد. به جزئیات توجه زیادی دارد."[::-1]
-    v = [v_1 , v_2 , v_3 , v_4 ,v_5 , v_6 , v_6, v_8]
-    return v 
-def rolls():
-    r_1 ='اجرایی '[::-1]
-    r2= 'رئیس'[::-1]
-    r3 = 'شکل دهنده'[::-1]
-    r4 = 'خلاق و مبتکر'[::-1]
-    r5= 'جستجوگر منابع'[::-1]
-    r6 ='ارزیاب ناظر'[::-1]
-    r7 ='همکار گروه  '[::-1]
-    r8 ='تمام کننده'[::-1]
-    r = [r_1 , r2,r3,r4,r5,r6,r7,r8]
-    return r
+import os
+import sqlite3
 
-def q ():
-    q_1 = "من باور دارم که به صورت زیر به گروهی که در آن هستم می توانم کمک می کنم . "
-    q_2 = " اگر نقطه ضعف¬هایی در کار گروهی دارم ممکن است به دلیل یا دلایل زیر باشد"
-    q_3=" وقتی درگیر اجرای پروژه¬ای با دیگران هستم"
-    q_4=". نگاه شخصیتی من نسبت به کار گروهی "
-    q_5="من از انجام کاری احساس رضایت می کنم به این سبب که "
-    q_6="گر به من کاری ارجاع شود که در آن زمان کم است و افرادی که با آنها درگیر هستم را نمی شناسم"
-    q_7="در گروه های کاری ممکن است گاهی با مشکلاتی روبرو شوم چون: "
-    qs = [q_1 ,q_2 , q_3,q_4 , q_5 , q_6 , q_7]
-    return qs
-def q_1 ():
-    q_a_1 = '1من فکر می کنم که می توانم سریع متوجه فرصتهای جدید شوم و از آنها استفاده ببرم.'
-    q_a_2 ="2 من خوب می توانم با تعداد بسیاری از افراد کار کنم. "
-    q_a_3 ="3 من در ایجاد ایده های تازه خوب هستم. "
-    q_a_4 ="4 هر گاه متوجه شوم که کسانی هستند چیزی ارزشمند برای گروه دارند قادرم آنها را به گروه جلب کنم. "
-    q_a_5 ="5 یکی از دلایل اصلی که من موثر هستم این است که من ایده ها را پیگیری می کنم. "
-    q_a_6 ="6  حاضرم با شرایط ناآشنا روبرو شوم اگر در انتهای کار منجر به نتایج ارزشمند شود"
-    q_a_7 ="7  وقتی قرار باشد در شرایطی کار کنم که با آن آشنا هستم سریع آن را حس می کنم. "
-    q_a_8 = "8 می توانم برای یک مورد معقول راه حلهای جایگزین ارائه دهم بدون اینکه تعصب به خرج دهم"
-    q_a = [q_a_1 , q_a_2 , q_a_3, q_a_4, q_a_5, q_a_6, q_a_7, q_a_8]
-    return q_a
-def q_2():
-    q_b_1 = '1 تا زمانی که جلسات خوب سازماندهی نشده باشند یا تحت کنترل نباشد یا خوب هدایت نشوند، من احساس راحتی نمی کنم.'
-    q_b_2 ="2 من نسبت به کسانی که نقطه نظر درستی دارند ولی به درستی نظرات آنها شنیده نشده است، بیش از اندازه سخاوتمند هستم. . "
-    q_b_3 ="3 وقتی گروه پی¬گیر ایده¬های تازه می¬شود، گاهی اوقات زیاد حرف می¬زنم. "
-    q_b_4 ="4وقتی دیدگاهی اعتراضی نسبت به موضوعی دارم، این باعث می¬شود به سختی بتوانم سریع و با شور و شوق به میان دوستانم در گروه بپیوندم.  "
-    q_b_5 ="5 گاهی اوقات اگر نیاز باشد کاری انجام شود قدرتمند و سرکوب¬گر جلوه می¬کنمم. "
-    q_b_6 ="6) سخت می¬توانم گروه را رهبری کنم شاید به این خاطر که بیش از اندازه نسبت به فضای گروه پاسخگو هستم. "
-    q_b_7 ="7 گاهی اوقات بیش از اندازه مشغول اتفاقاتی می¬شوم که برای من می افتد و گاهی برای پی¬گیری یک اتفاق خیلی سست هستم. . "
-    q_b_8 = "8 همکارانم مرا آدمی می دانند که خیلی بی¬مورد نسبت به جزئیات و از اینکه ممکن است کارها خراب شود، نگرانم. "
-    q_b = [q_b_1 , q_b_2 , q_b_3, q_b_4, q_b_5, q_b_6, q_b_7, q_b_8]
-    return q_b
-def q_3():
-    q_c_1 = '1 من توانایی دارم بر دیگران تأثیر بگذارم بدون اینکه بر آنها فشار بیاورم. .'
-    q_c_2 ="2 من آدم دقیقی هستم و همه چیز را تحت نظر دارم که این مانع اشتباهات بدون دقت و کارهای انجام نشده شود. . . "
-    q_c_3 ="3 در یک جلسه، حاضرم برای انجام یک اقدام فشار بیاورم تا مطمئن شوم که وقت¬مان در جلسه تلف نشود یا از هدف اصلی آن دور نشود. "
-    q_c_4 ="4 . همواره برای ارائه ایده های نو و مبتکرانه می¬توان روی من حساب کرد.  "
-    q_c_5 ="5 . همواره حاضرم از پیشنهاد خوب که منافع مشترک را به بار می¬آورد حمایت کنم."
-    q_c_6 ="6) .خیلی دوست دارم دنبال آخرین ایده¬ها و تحولات تازه باشم.  "
-    q_c_7 ="7 من اعتقاد دارم ظرفیتم برای ارائه یک قضاوت درست توسط دیگران قابل تقدیر است.  "
-    q_c_8 = "8 دیگران می توانند به من تکیه کنند که همه کارهای ضروری سازماندهی شده اند. . "
-    q_c = [q_c_1 , q_c_2 , q_c_3, q_c_4, q_c_5, q_c_6, q_c_7, q_c_8]
-    return q_c
-def q_4():
-    q_d_1 = '1  من علاقه دارم همکارانم را بهتر بشناسم. .'
-    q_d_2 ="2   من مایل نیستم که دیدگاه¬های دیگران را به چالش بکشم یا دیدگاه خودم در اقلیت قرار گیرد. "
-    q_d_3 ="3 من معمولا استدلال¬های خوبی برای به چالش کشاندن ایده ها یا پیشنهادات ضعیف دارم.  "
-    q_d_4 ="4  فکر می¬کنم وقتی نیاز است که طرحی اجرا گردد استعداد خوبی برای پیش بردن امور دارم.  "
-    q_d_5 ="5  تمایل دارم که از اشتباهات آشکار اجتناب کنم و همچنین از عهده مورد غیرقابل انتظار بر می¬آیم. "
-    q_d_6 ="6) در هر کاری که به عهده من گذاشته می¬شود سعی می¬کنم که حرفه¬ای عمل کنم.  "
-    q_d_7 ="7حاضرم خارج از گروه از ارتباطاتم استفاده ببرم.   "
-    q_d_8 = "8 وقتی قرار است تصمیمی گرفته شود بی¬درنگ تصمیم می¬گیرم هر چند که به نظرات مختلفی علاقه¬مند باشم.  "
-    q_d = [q_d_1 , q_d_2 , q_d_3, q_d_4, q_d_5, q_d_6, q_d_7, q_d_8]
-    return q_d
-def q_5():
-    q_e_1 = '1 از تجزیه و تحلیل اوضاع و سبک سنگین کردن راه¬های ممکن لذت می برم. .'
-    q_e_2 ="2  من به یافتن راه حلهای عملی برای مشکلات علاقه¬مند هستم.  "
-    q_e_3 ="3   دوست دارم حس کنم همیشه روابط کاری خوبی را تحکیم می¬بخشم. "
-    q_e_4 ="4   روی تصمیم¬ها نفوذ زیادی دارم. "
-    q_e_5 ="5  می توانم افرادی را ملاقات کنم که ممکن است چیز تازه ای برای طرح کردن داشته باشند.   "
-    q_e_6 ="6)می توانم توافق دوستان را برای انجام یک اقدام بگیرم.   "
-    q_e_7 ="7 آدمی هستم که می توانم توجه کامل خود را معطوف کاری کنم.  "
-    q_e_8 = "8  دوست دارم که عرصه ای را بیابم که تخیل مرا افزایش دهد."
-    q_e = [q_e_1 , q_e_2 , q_e_3, q_e_4, q_e_5, q_e_6, q_e_7, q_e_8]
-    return q_e
-def q_6():
-    q_d_1 = '1 دوست دارم قبل از اینکه پاسخی را برای مشکلی بیابم به گوشه ای بروم و راهی را تدبیر کنم. .'
-    q_d_2 ="2 آماده¬ام با فردی کار کنم که مثبت ترین نگرش را دارد – هر چند که ممکن است آدم سختی باشد.   "
-    q_d_3 ="3 با ایجاد هماهنگی میان کمکی که افراد مختلف می¬توانند ارائه کنند، قدرت دارم که از حجم کار بکاهم.  "
-    q_d_4 ="4  در من حس طبیعی درک فوریت کار وجود دارد که کمک می¬کند از برنامه عقب نیافتیم.  "
-    q_d_5 ="5  معتقدم می توانم خونسردی خودم را حفظ کنم و ظرفیت خود را برای اینکه بتوانم مستقیم به موضوع تفکر کنم حفظ کنم. "
-    q_d_6 ="6)  علی رغم وجود فشارها می¬توانم همچنان در رسیدن به هدف ایستادگی کنم. "
-    q_d_7 ="7  اگر حس کنم که گروه هیچ پیشرفتی نمی¬کند مایلم که به صورتی مثبت رهبری گروه را به دست بگیرم. "
-    q_d_8 = "8 این توان را دارم که به بحث و گفتگو دامن بزنم با این دیدگاه تفکرات جدید در گروه مطرح شود و امور پیشرفت کند.  "
-    q_f = [q_d_1 , q_d_2 , q_d_3, q_d_4, q_d_5, q_d_6, q_d_7, q_d_8]
-    return q_f
-def q_7():
-    q_d_1 = '1 گاهی نسبت به کسانی که مانع پیشرفت امور می¬شوند بی¬حوصله می¬شوم. .'
-    q_d_2 ="2 چون بیش از اندازه تجزیه و تحلیل می¬کنم و به مسائل می¬اندیشم دیگران از من انتقاد می¬کنم.   "
-    q_d_3 ="3  اینکه دوست دارم خاطرم از درستی انجام کارها جمع باشد ممکن است مانع انجام امور شود.  "
-    q_d_4 ="4   خیلی ساده حوصله¬ام سر می¬رود و متکی به یکی دو نفر اعضای محرک هستم تا باعث شود که دوباره سر کار برگردم.  "
-    q_d_5 ="5 سخت است وقتی اهداف مشخص نیستند شروع به کار کنم.  "
-    q_d_6 ="6) گاهی اوقات در توضیح و تصریح نقاط پیچیده کار که برایم پیش می¬آید ضعیف هستم. "
-    q_d_7 ="7  آگاهانه چیزهایی را از دیگران درخواست می¬کنم انجام دهند که می دانم خودم نمی توانم انجام دهم.  "
-    q_d_8 = "8 ) وقتی با اعتراض واقعی روبرو می شوم در پیش بردن نظرات خودم درنگ می کنم.  "
-    q_g = [q_d_1 , q_d_2 , q_d_3, q_d_4, q_d_5, q_d_6, q_d_7, q_d_8]
-    return q_g
+def connect_to_database(db_name):
+    """اتصال به پایگاه داده SQLite."""
+    conn = sqlite3.connect(db_name)
+    cur = conn.cursor()
+    return conn , cur
+
+def fetch_results(cursor,command):
+    """دریافت نتایج از پایگاه داده."""
+    cursor.execute(command)  # این کوئری را بر اساس نیاز خود تغییر دهید
+    return cursor.fetchall()
+def read_specific_lines(filename, line_numbers):
+    with open(filename, 'r', encoding='utf-8') as f:
+        lines = f.readlines()
+        selected_lines = [lines[i - 1].strip() for i in line_numbers]
+    return selected_lines
+#this is a def to read q from
+def uniq(x, y):
+    file_path = 'all_Q.txt'
+    line_numbers_to_read = list(range(x, y))
+    return read_specific_lines(file_path, line_numbers_to_read)
+
+def vijegi():
+    con , cur = connect_to_database('questions.db')
+    commnd = "SELECT feature FROM results"
+    res = fetch_results(cur , commnd)
+    return res
+
+def rolls():
+    con , cur = connect_to_database('questions.db')
+    commnd = "SELECT summary FROM results"
+    res = fetch_results(cur , commnd)
+    return res
+
+def q():
+    con , cur = connect_to_database('questions.db')
+    commnd = "SELECT question FROM main_questions"
+    res = fetch_results(cur , commnd)
+    return res
+      
 def a_al():
-    a =q_1()
-    b = q_2()
-    c= q_3()
-    d = q_4()
-    e=q_5()
-    f = q_6()
-    r = q_7()
-    x = [a , b , c, d ,e, f , r ]
-    return x
+    results = []
+    start = 8
+    end = 64
+    while start < end:
+        results.append(uniq(start, start + 8))
+        start += 8
+    return results
+
 def check(arr):
-    res = sum(arr)
-    if res > 10 :
-        v = True
-    else:
-        v = False
-        
-    return v    
-        
-def p_q (): 
-    qous = q()
-    qs_a = a_al()
-    all_sce = []
-    for i in range(len(qous)):
+    return sum(arr) > 10
+
+def p_q():
+    main_questions = q()
+    sub_questions = a_al()
+    all_scores = []
+
+    def get_scores_for_question(i):
         points = []
-        print(qous[i][::-1])
+        print(main_questions[i][::-1])
         for j in range(8):
-            print(qs_a[i][j][::-1])
-            txt_1 = "از یک تا ده امتیاز وارد کنید:"[::-1]
-            print(txt_1)
+            print(sub_questions[i][j][::-1])
+            prompt = "از یک تا ده امتیاز وارد کنید:"[::-1]
+            print(prompt)
             score = int(input(":  "))
             points.append(score)
+        return points
+
+    for i in range(len(main_questions)):
+        points = get_scores_for_question(i)
         while check(points):
             for k in range(6):
-                print(qs_a[i][k][::-1])
+                print(sub_questions[i][k][::-1])
                 print("\n")
-            mssge = "امتیاز بیشتر از ده شده ؛ تعویض امتیاز کدام سوال؟"[::-1]
-            print(mssge)
+            prompt = "امتیاز بیشتر از ده شده ؛ تعویض امتیاز کدام سوال؟"[::-1]
+            print(prompt)
             change = int(input(" ")) - 1
-            print(qs_a[i][change][::-1])
-            new_s = int(input('?  '))
-            points[change] = new_s
-        all_sce.append(points)
-    return all_sce        
-            
+            print(sub_questions[i][change][::-1])
+            new_score = int(input('?  '))
+            points[change] = new_score
+        all_scores.append(points)
+    return all_scores
+
 def col_s(arr):
-    c_1 = arr[0][6]+ arr[1][0] + arr[2][7]+ arr[3][3] +arr[4][1] +arr[5][5] +arr[6][4] 
-    c_2 = arr[0][3]+ arr[1][1] + arr[2][0]+ arr[3][7] +arr[4][5] +arr[5][2] +arr[6][6]  
-    c_3 = arr[0][5]+ arr[1][4] + arr[2][2]+ arr[3][1] +arr[4][3] +arr[5][6] +arr[6][0] 
-    c_4 = arr[0][2]+ arr[1][6] + arr[2][3]+ arr[3][4] +arr[4][7] +arr[5][0] +arr[6][5] 
-    c_5 = arr[0][0]+ arr[1][2] + arr[2][5]+ arr[3][6] +arr[4][4] +arr[5][7] +arr[6][3]
-    c_6 = arr[0][7]+ arr[1][3] + arr[2][6]+ arr[3][2] +arr[4][0] +arr[5][4] +arr[6][1]           
-    c_7 = arr[0][1]+ arr[1][5] + arr[2][4]+ arr[3][0] +arr[4][2] +arr[5][1] +arr[6][7]
-    c_8 = arr[0][4]+ arr[1][7] + arr[2][1]+ arr[3][5] +arr[4][6] +arr[5][3] +arr[6][2]
-    cs = [c_1 , c_2 , c_3 , c_4 , c_5 , c_6 ,c_7 , c_8]
-    return cs        
-def maximm(cs , all_sce):
-    m = max(cs )
-    awn = 0
-    q = cs.count(m)
+    columns = [
+        [arr[0][6], arr[1][0], arr[2][7], arr[3][3], arr[4][1], arr[5][5], arr[6][4]],
+        [arr[0][3], arr[1][1], arr[2][0], arr[3][7], arr[4][5], arr[5][2], arr[6][6]],
+        [arr[0][5], arr[1][4], arr[2][2], arr[3][1], arr[4][3], arr[5][6], arr[6][0]],
+        [arr[0][2], arr[1][6], arr[2][3], arr[3][4], arr[4][7], arr[5][0], arr[6][5]],
+        [arr[0][0], arr[1][2], arr[2][5], arr[3][6], arr[4][4], arr[5][7], arr[6][3]],
+        [arr[0][7], arr[1][3], arr[2][6], arr[3][2], arr[4][0], arr[5][4], arr[6][1]],
+        [arr[0][1], arr[1][5], arr[2][4], arr[3][0], arr[4][2], arr[5][1], arr[6][7]],
+        [arr[0][4], arr[1][7], arr[2][1], arr[3][5], arr[4][6], arr[5][3], arr[6][2]]
+    ]
+    return [sum(column) for column in columns]
+
+def maximm(cs, all_scores):
+    max_score = max(cs)
     t = "بهتر است تغییراتی ایجاد کنید"[::-1]
     ta = " کدام سوال را تغییر میدهید؟ "[::-1]
-    ab = "سوال؟ "[::-1]  
-    ac = "بخش؟"[::-1]  
-    while q > 1 :
-        print(t)
-        print(ta)          
-        print("\n")
-        alll =a_al()
-        print(alll[::-1])
-        print(ab)           
-        ch_q = int(input(" ?  "))
-        print(ac)       
-        ch_b= int(input(" ? "))
-        new= int(input(" score  ? "))
-        all_sce[ch_q-1][ch_b-1] = new
-        cs = col_s(all_sce)
-        m = max(cs )
-        q = cs.count(m)
-    for i in cs:
-        if cs[i]== m:
-            awn = i
-            return awn 
+    ab = "سوال؟ "[::-1] 
+    ac = "بخش؟"[::-1] 
 
-    return awn
-def result(numb ):
+    while cs.count(max_score) > 1:
+        print(t)
+        print(ta)         
+        print("\n")
+        all_questions = a_al()
+        print(all_questions[::-1])
+        print(ab)          
+        ch_q = int(input(" ?  ")) - 1
+        print(ac)      
+        ch_b = int(input(" ? ")) - 1
+        new_score = int(input(" score  ? "))
+        all_scores[ch_q][ch_b] = new_score
+        cs = col_s(all_scores)
+        max_score = max(cs)
+    return cs.index(max_score)
+
+def result(numb):
     rlls = rolls()
     vi = vijegi()
     txt_a = "گروه شما : "[::-1]
     txt_b = "ویزگی ها "[::-1]
-    txt_c ="نقاط ضعف قابل تحمل"[::-1]
-    txt_d = "مشوق ها "[::-1] 
-    
-    if numb == 0:
-        print(txt_a)
-        print('\n')
-        print(rlls[0])
-        print(txt_b)
-        print('\n')
-        print(vi[0])        
-    elif numb == 1 :
-        print(txt_a)
-        print('\n')
-        print(rlls[1])
-        print(txt_b)
-        print('\n')
-        print(vi[1])
-    elif numb== 2:
-        print(txt_a)
-        print('\n')
-        print(rlls[2])
-        print(txt_b)
-        print('\n')
-        print(vi[2])  
-    elif numb == 3:
-        print(txt_a)
-        print('\n')
-        print(rlls[3])
-        print(txt_b)
-        print('\n')
-        print(vi[3])     
-    elif numb == 4:
-        print(txt_a)
-        print('\n')
-        print(rlls[4])
-        print(txt_b)
-        print('\n')
-        print(vi[4])
-    elif numb == 5:
-        print(txt_a)
-        print('\n')
-        print(rlls[5])
-        print(txt_b)
-        print('\n')
-        print(vi[5])                    
-    elif numb == 6:
-        print(txt_a)
-        print('\n')
-        print(rlls[6])
-        print(txt_b)
-        print('\n')
-        print(vi[6])    
-    elif numb == 7:
-        print(txt_a)
-        print('\n')
-        print(rlls[7])
-        print(txt_b)
-        print('\n')
-        print(vi[7])          
-while True:
-    txt = "برای شرکت در ازمون کلیک کنید:"[::-1]
-    print(txt)
-    choice = int(input(""))
-    match choice:
-        case 1 :
-            a = p_q()   
-            # print(a)
-            b = col_s(a)
-            print(b)
-            m = max(b)
-            print(m)
-            c =  maximm(b , a)
-            print(c)
-            result(c)
+    if 0 <= numb < len(rlls):
+        print(f"{txt_a}\n\n{rlls[numb]}\n{txt_b}\n\n{vi[numb]}")
+
+def main():
+    while True:
+        txt = "برای شرکت در ازمون کلیک کنید:"[::-1]
+        print(txt)
+        choice = int(input(""))
+        if choice == 1:
+            all_scores = p_q()  
+            column_scores = col_s(all_scores)
+            print(column_scores)
+            max_score = max(column_scores)
+            print(max_score)
+            result_index = maximm(column_scores, all_scores)               
+            print(result_index)
+            result(result_index)
+            result_index = column_scores.index(max_score)              
+            print(result_index)
+            result(result_index)
+if __name__ == "__main__":
+    main()
+
+            
