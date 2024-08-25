@@ -1,0 +1,52 @@
+{% extends "base.html" %} {% block content %} {% load static %}
+<html lang="fa-IR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Questions List</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #e0f7fa; /* Light cyan background */
+        color: #004d40; /* Dark teal text */
+        margin: 0;
+        padding: 0;
+      }
+      header {
+        background-color: #004d40; /* Dark teal header */
+        color: #ffffff; /* White text */
+        padding: 15px;
+        text-align: center;
+      }
+      .container {
+        padding: 20px;
+      }
+      .question {
+        background-color: #a7ffeb; /* Light teal question background */
+        border: 1px solid #004d40; /* Dark teal border */
+        border-radius: 5px;
+        padding: 15px;
+        margin-bottom: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Questions from the Database</h1>
+    </header>
+    <div class="container">
+      <!-- Placeholder for dynamically loaded questions -->
+      {% for item in p %}
+      <div class="question">
+        <!-- Example question -->
+        <p dir="rtl">{{ item.question }}</p>
+        <label for="quantity" dir="rtl"></label>
+        <input type="number" id="quantity" name="quantity" min="1" max="10" />
+      </div>
+      {% endfor %}
+
+      <!-- More questions will go here -->
+    </div>
+  </body>
+</html>
+{% endblock %}
