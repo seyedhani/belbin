@@ -1,0 +1,122 @@
+{% extends "base.html" %} {% block content %} {% load static %}
+
+<!DOCTYPE html>
+<html lang="fa">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>درباره ما - Belbin Test</title>
+    <!-- لینک به بوت استرپ -->
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        background-color: #f0f8ff; /* پس‌زمینه آبی روشن */
+        color: #333;
+        direction: rtl;
+      }
+      .about-header {
+        background-color: #e6f2ff; /* پس‌زمینه روشن‌تر برای هدر */
+        padding: 40px 0;
+        animation: fadeInDown 2s;
+      }
+      .about-content {
+        background-color: #ffffff; /* پس‌زمینه سفید برای محتوا */
+        padding: 40px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        margin-top: -20px;
+        animation: fadeInUp 2s;
+      }
+      @keyframes fadeInDown {
+        from {
+          opacity: 0;
+          transform: translateY(-20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .email-link:hover {
+        color: #0056b3;
+        text-decoration: underline;
+      }
+      .email-link {
+        transition: color 0.3s, text-decoration 0.3s;
+      }
+      #surpriseButton {
+        margin-top: 20px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s, transform 0.3s;
+      }
+      #surpriseButton:hover {
+        background-color: #0056b3;
+        transform: scale(1.1);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- بخش هدر -->
+    <header class="about-header text-center">
+      <h1 class="display-4">درباره ما</h1>
+      <p class="lead">اطلاعات بیشتر درباره تست Belbin و تیم ما</p>
+    </header>
+
+    <!-- محتوای درباره ما -->
+    <section class="container mt-5">
+      <div class="about-content text-center">
+        <h2>آیسان علیزاده - توسعه‌دهنده</h2>
+        <p>
+          سلام! من آیسان علیزاده هستم و توسعه‌دهنده سایت Belbin Test می‌باشم. من
+          علاقه زیادی به ایجاد برنامه‌های وب کاربردی و کاربردی دارم که زندگی
+          مردم را آسان‌تر می‌کند. تست Belbin یکی از پروژه‌های من است که برای کمک
+          به تیم‌ها و افراد در درک بهتر نقاط قوت و نقش‌های خود طراحی شده است.
+        </p>
+        <p>
+          اگر سؤالی دارید، پیشنهاد دارید یا فقط می‌خواهید سلام کنید، لطفاً با من
+          از طریق ایمیل در ارتباط باشید:
+        </p>
+        <p>
+          <strong>ایمیل:</strong>
+          <a href="mailto:alizasemahsan@gmail.com" class="email-link"
+            >alizasemahsan@gmail.com</a
+          >
+        </p>
+        <button id="surpriseButton">روی من کلیک کنید!</button>
+      </div>
+    </section>
+
+    <!-- بوت استرپ، پاپر و جی‌کوئری -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+      // اسکریپت جاوااسکریپت برای دکمه سورپرایز
+      document
+        .getElementById("surpriseButton")
+        .addEventListener("click", function () {
+          alert("شما فوق‌العاده هستید! ادامه دهید و بهترین خود را ارائه دهید!");
+        });
+    </script>
+  </body>
+</html>
+
+{% endblock %}
