@@ -1,0 +1,92 @@
+{% extends "base.html" %} {% block content %} {% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Belbin Test Homepage</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+        color: #333;
+        text-align: center;
+      }
+      header {
+        background-color: #4caf60;
+        color: white;
+        padding: 20px 0;
+      }
+      .content {
+        margin: 20px;
+        padding: 20px;
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+      .icons {
+        display: flex;
+        justify-content: center;
+        gap: 50px;
+        margin-top: 30px;
+      }
+      .icon {
+        width: 100px;
+        height: 100px;
+        background-color: #4caf50;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 48px;
+        transition: transform 0.3s ease;
+      }
+      .icon:hover {
+        transform: scale(1.2);
+      }
+      .icon-animated {
+        animation: pulse 1.5s infinite;
+      }
+      @keyframes pulse {
+        0% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.1);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Welcome to the Belbin Test Homepage</h1>
+    </header>
+
+    <div class="content">
+      <h2>Discover Your Team Role</h2>
+      <p>
+        The Belbin Test helps you understand your strengths and role within a
+        team. Take the test and find out how you can contribute to your team’s
+        success!
+      </p>
+
+      <div class="icons">
+        <!-- Teamwork Icon -->
+        <div class="icon icon-animated" title="Teamwork">🤝</div>
+
+        <!-- Brain Icon -->
+  
+        <div class="icon icon-animated" title="Brain">🧠</div>
+  
+        <div class="icon icon-animated" title="test"><a href="{% url "ques" %}">📃 </a></div>
+      </div>
+    </div>
+  </body>
+</html>
+{% endblock %}
