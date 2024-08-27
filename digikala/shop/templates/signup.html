@@ -1,7 +1,15 @@
 {% extends "base.html" %} {% block content %} {% load static %}
-<form method="POST" action="{% url "signup" %}">
-{% csrf_token %}
-
-  <button type="submit" class="btn btn-primary">sigup</button>
-</form>
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Register</title>
+  </head>
+  <body>
+    <h2>Register</h2>
+    <form method="POST">
+      {% csrf_token %} {{ form.as_p }}
+      <button type="submit">Register</button>
+    </form>
+  </body>
+</html>
 {% endblock %}

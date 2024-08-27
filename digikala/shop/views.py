@@ -6,6 +6,7 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
+from .forms import UserRegisterForm
 def main(request):
     return render(request , 'index.html' )          
 def about(request):
@@ -37,6 +38,18 @@ def PQ(request , pk ):
     return render(request , 'qp.html' , {'detail_records' : detail_records} )
                           
 def signupUser(request ):
-    
-    return render(request , 'signup.html'  )
+    form = UserRegisterForm()
+    if request.method == "POST":
+        form = UserRegisterForm(request.POST)
+        if form.is_valid:
+            form.save()
+            username = form.cleaned_data['username']
+            pass1 = form.cleaned_data['password1']
+            user = authenticate(request ,username = username , password =pass1)
+            login(request ,user)
+            return redirect('home')
+        else:
+            return redirect('signup')
+    else:
+        return render(request, 'signup.html', {'form': form})
                           
