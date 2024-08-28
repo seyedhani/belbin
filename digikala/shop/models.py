@@ -9,14 +9,6 @@ class Users(models.Model):
     score =models.IntegerField()
     def __str__(self):
         return F'{self.first_name}{self.last_name}'
-    
-class Questions(models.Model):
-    numb = models.IntegerField()
-    url = models.CharField( max_length=50)
-    ques = models.CharField(max_length=500)
-    def __str__(self):
-        return F'{self.numb}{self.ques}'
-    
 class MainQ(models.Model):
     title = models.CharField(max_length=300)
     def __str__(self) :

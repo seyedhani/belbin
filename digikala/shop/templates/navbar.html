@@ -1,57 +1,117 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Belbin Navbar</title>
-    <!-- Bootstrap CSS -->
-    <link
-      href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
+    <title>Belbin</title>
+    <style>
+      /* تنظیمات کلی برای بدنه و بک‌گراند صفحه */
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: linear-gradient(135deg, #1c39bb 0%, #4a68cf 100%);
+        background-image: linear-gradient(135deg, #1c39bb 0%, #4a68cf 100%),
+          url("https://via.placeholder.com/1500");
+        background-size: cover, cover;
+        background-blend-mode: overlay;
+      }
+
+      /* استایل ناوبار */
+      nav {
+        background-color: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(10px);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        padding: 10px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-family: "Lucida Console", "Courier New", monospace;
+      }
+
+      #navBrand h1 {
+        color: #1c39bb;
+        margin: 0;
+      }
+
+      .navList {
+        display: grid;
+        grid-template-columns: repeat(var(--items), 1fr);
+        position: relative;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      .navList li {
+        position: relative;
+        margin: 0;
+        transition: all 0.3s;
+      }
+
+      .navList a {
+        position: relative;
+        text-decoration: none;
+        color: #1c39bb;
+        font-weight: bold;
+        padding: 5px 10px;
+        transition: all ease 0.3s;
+      }
+
+      .navList .line {
+        background-color: #adf;
+        height: 3px;
+        pointer-events: none;
+        opacity: 0;
+        transition: all 0.5s cubic-bezier(1, 2, 0.2, 0.6);
+        position: absolute;
+        bottom: -13px; /* فاصله خط از متن */
+        left: 0;
+        width: 0;
+      }
+      .navList li:hover {
+        transform: scale(1.1);
+        transition: all 0.3s;
+      }
+      .navList li:hover .line {
+        opacity: 1;
+      }
+    </style>
   </head>
   <body>
-    <nav
-      class="navbar navbar-expand-lg"
-      style="background-color: #2e8b57; padding: 10px"
-    >
-      <div class="container-fluid">
-        <a class="navbar-brand" href="#" style="color: white; font-weight: bold"
-          >Belbin</a
-        >
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
-          aria-controls="navbarNav"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon" style="color: white"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ms-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="#" style="color: white">Description</a>
+    <nav>
+      <div id="navBrand">
+        <h1>Belbin</h1>
+      </div>
+      <div>
+        <ul class="navList" style="--items: 6">
+          <li class="navLog">
+            <a href="{% url "home" %}">🏠</a><span class="line"></span>
+          </li>
+          {% if user.is_authenticated %}
+          <li class="navLog"><a href="{% url "logout" %}">Logout</a><span class="line"></span></li>
+          <li class="navLog"><a href="#">welcome</a><span class="line"></span></li>
+          {% else %}
+          <li class="navLog">
+            <a href="{% url "login" %}">Log In</a><span class="line"></span>
+          </li>
+          <li class="navigationItem">
+            <a href="{% url "signup" %}">Sign Up</a><span class="line"></span>
+          </li>
+          {% endif %} 
+          <li class="navigationItem">
+            <a href="">About us</a><span class="line"></span>
+          </li>
+          <li class="navigationItem">
+            <a href="">Contact us</a><span class="line"></span>
+            <li class="navigationItem">
+              <a href="">language</a><span class="line"></span>
             </li>
-            <li class="nav-item">
-              {% if user.is_authenticated %}
-              <a class="nav-link" href="{% url "logout" %}"style="color: white">Log Out</a>
-              {% else %}
-            </li>
-            <li class="nav-item" style= "overflow:auto;">
-                           <a class="nav-link" href="{% url "login" %}" style="color: white">Log In</a>
-                           <a class="nav-link" href="{% url "signup" %}" style="color: white">signup</a>
-              {% endif %} 
-            </li>
-          </ul>
-        </div>
+          </li>
+        </ul>
       </div>
     </nav>
-
-    <!-- Bootstrap JS Bundle (with Popper.js) -->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.min.js"></script>
+    
+    <script src="{% static "js/script.js" %}"></script>
   </body>
 </html>
