@@ -6,7 +6,7 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
-from .forms import UserRegisterForm
+from .forms import UserRegisterForm , AcountForm
 def main(request):
     return render(request , 'index.html' )          
 def about(request):
@@ -32,6 +32,7 @@ def MQ(request ):
     records =  MainQ.objects.all( )                                                   
     return render(request , 'ques.html' , {'records' : records} )
 def PQ(request , pk ):
+    # COULD USE GETMETHOD TO
     start = (pk-1)*8
     end = start+8
     detail_records =  AggrQ.objects.all()[start:end]
@@ -52,4 +53,21 @@ def signupUser(request ):
             return redirect('signup')
     else:
         return render(request, 'signup.html', {'form': form})
-                          
+def UserAccount(request ):
+    if request.method == 'POST':
+        form = AcountForm(data=request.POST)
+        if form.is_valid():
+            form.save()
+    else:
+        form = AcountForm()
+    return render(request , 'account_form.html' , {'form':form})
+
+
+def UserScore(request ):
+    if request.method == 'POST':
+        form = AcountForm(data=request.POST)
+        if form.is_valid():
+            form.save()
+    else:
+        form = AcountForm()
+    return render(request , 'account_form.html' , {'form':form})
