@@ -1,0 +1,128 @@
+/* بارگذاری فونت از Google Fonts با @import */
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap");
+
+/* تنظیم فونت برای کل بدنه */
+body {
+  font-family: "lato";
+  font-weight: 600;
+}
+
+/* تنظیمات کلی برای بدنه و بک‌گراند صفحه */
+body {
+  margin: 0;
+  background: linear-gradient(135deg, #1c39bb 0%, #4a68cf 100%);
+  background-image: linear-gradient(135deg, #1c39bb 0%, #4a68cf 100%),
+    url("https://via.placeholder.com/1500");
+  background-size: cover, cover;
+  background-blend-mode: overlay;
+}
+/* استایل نوار ناوبری */
+nav {
+  background-color: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 10px 20px;
+  display: flex;
+  align-items: center; /* مرکز کردن عمودی */
+  justify-content: space-between; /* تقسیم فضای موجود بین برند و لیست ناوبری */
+  position: relative; /* اطمینان از نوار ثابت */
+}
+/* استایل برند */
+#navBrand {
+  display: flex;
+  align-items: center; /* تراز عمودی برای برند و تصویر */
+  position: relative; /* برای استفاده از position: absolute در تصویر */
+}
+
+#navBrand h1 {
+  margin: 0;
+  color: #1c39bb;
+  font-size: xx-large;
+  text-transform: uppercase;
+  z-index: 1; /* متن در جلو باشد */
+}
+
+/* استایل تصویر برند */
+.imgBrand {
+  width: 50px; /* اندازه تصویر */
+  height: auto; /* حفظ نسبت ابعاد تصویر */
+  object-fit: contain; /* مناسب برای تصاویر با ابعاد مختلف */
+  background: transparent; /* حذف پس‌زمینه تصویر */
+  position: absolute; /* قرار دادن تصویر در موقعیت دلخواه */
+  left: 120px;
+  top: 0px; /* موقعیت عمودی */
+  z-index: 0; /* قرار دادن تصویر در پس‌زمینه نسبت به متن */
+}
+/* استایل لیست ناوبری */
+
+.navList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 30px; /* فاصله ثابت بین آیتم‌ها */
+}
+.navList li {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* مرکز چینش عمودی */
+  justify-content: center; /* مرکز چینش افقی */
+  position: relative;
+}
+
+/* استایل لینک‌ها */
+.navList a {
+  text-decoration: none;
+  color: #1c39bb;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  margin-top: 5px; /* فاصله بین تصویر و نوشته */
+}
+/* استایل تصاویر */
+.navList img {
+  width: 50px;
+  aspect-ratio: 4/3;
+  object-fit: contain;
+  margin-bottom: 2px; /* کاهش فاصله از متن */
+  transition: transform 0.3s ease;
+}
+/* .navLog img {
+  height: 35px;
+} */
+/* استایل نوشته‌های زیر عکس‌ها */
+.iconDetail {
+  opacity: 0; /* پنهان کردن نوشته به صورت پیش‌فرض */
+  transform: translateY(5px); /* کاهش فاصله خط از نوشته */
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  position: relative;
+  margin-bottom: 10px; /* فاصله بین نوشته و خط زیر آن */
+}
+
+/* استایل خط زیر نوشته‌ها */
+.line {
+  background-color: #adf;
+  height: 3px;
+  width: 0; /* عرض پیش‌فرض خط، ممکن است نیاز به تغییر داشته باشد */
+  position: absolute;
+  bottom: 0; /* موقعیت افقی خط */
+  left: 0; /* موقعیت عمودی خط */
+  opacity: 0; /* پنهان کردن خط به‌طور پیش‌فرض */
+  transition: opacity 0.3s ease, width 0.3s ease; /* ترنزیشن برای opacity و width */
+}
+
+/* افکت هاور */
+.navList li:hover img {
+  transform: translateY(-8px) scale(0.8); /* کوچک شدن و جابجایی تصویر */
+}
+
+.navList li:hover .iconDetail {
+  opacity: 1; /* نمایش نوشته هنگام هاور */
+  transform: translateY(0); /* موقعیت نهایی نوشته */
+}
+
+.navList li:hover .line {
+  width: 100%; /* افزایش عرض خط */
+  opacity: 1;
+}

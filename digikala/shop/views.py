@@ -30,7 +30,8 @@ def login_view(request):
     else:
         return render(request, 'login.html')
 def MQ(request ):
-    records =  MainQ.objects.all( )                               
+    records =  MainQ.objects.all( )     
+                              
     return render(request , 'ques.html' , {'records' : records} )
 def fpq(request , pk ):
     start = (pk-1) *8
@@ -48,7 +49,7 @@ def PQ(request , pk , sec):
             score_form.main_q = main
             score_form.part_q = detail_records
             score_form.save()
-        return redirect('new.html')
+        return redirect('home')
     else:
         form = ScoreFormForm()
     return render(request , 'qp.html' ,{'form' :form  })

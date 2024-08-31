@@ -6,112 +6,194 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Belbin</title>
     <style>
+      /* بارگذاری فونت از Google Fonts با @import */
+      @import url("https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap");
+
+      /* تنظیم فونت برای کل بدنه */
+      body {
+        font-family: "lato";
+        font-weight: 600;
+      }
+
       /* تنظیمات کلی برای بدنه و بک‌گراند صفحه */
       body {
         margin: 0;
-        font-family: Arial, sans-serif;
         background: linear-gradient(135deg, #1c39bb 0%, #4a68cf 100%);
         background-image: linear-gradient(135deg, #1c39bb 0%, #4a68cf 100%),
           url("https://via.placeholder.com/1500");
         background-size: cover, cover;
         background-blend-mode: overlay;
       }
-
-      /* استایل ناوبار */
+      /* استایل نوار ناوبری */
       nav {
         background-color: rgba(255, 255, 255, 0.8);
         backdrop-filter: blur(10px);
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         padding: 10px 20px;
         display: flex;
-        justify-content: space-between;
-        align-items: center;
-        font-family: "Lucida Console", "Courier New", monospace;
+        align-items: center; /* مرکز کردن عمودی */
+        justify-content: space-between; /* تقسیم فضای موجود بین برند و لیست ناوبری */
+        position: relative; /* اطمینان از نوار ثابت */
+      }
+      /* استایل برند */
+      #navBrand {
+        display: flex;
+        align-items: center; /* تراز عمودی برای برند و تصویر */
+        position: relative; /* برای استفاده از position: absolute در تصویر */
       }
 
       #navBrand h1 {
-        color: #1c39bb;
         margin: 0;
+        color: #000000;
+        font-size: xx-large;
+        text-transform: uppercase;
+        z-index: 1; /* متن در جلو باشد */
       }
 
+      /* استایل تصویر برند */
+      .imgBrand {
+        width: 50px; /* اندازه تصویر */
+        height: auto; /* حفظ نسبت ابعاد تصویر */
+        object-fit: contain; /* مناسب برای تصاویر با ابعاد مختلف */
+        background: transparent; /* حذف پس‌زمینه تصویر */
+        position: absolute; /* قرار دادن تصویر در موقعیت دلخواه */
+        left: 120px;
+        top: 0px; /* موقعیت عمودی */
+        z-index: 0; /* قرار دادن تصویر در پس‌زمینه نسبت به متن */
+      }
+      /* استایل لیست ناوبری */
+
       .navList {
-        display: grid;
-        grid-template-columns: repeat(var(--items), 1fr);
-        position: relative;
         list-style: none;
         margin: 0;
         padding: 0;
+        display: flex;
+        gap: 30px; /* فاصله ثابت بین آیتم‌ها */
       }
-
       .navList li {
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* مرکز چینش عمودی */
+        justify-content: center; /* مرکز چینش افقی */
         position: relative;
-        margin: 0;
-        transition: all 0.3s;
       }
 
+      /* استایل لینک‌ها */
       .navList a {
-        position: relative;
         text-decoration: none;
         color: #1c39bb;
-        font-weight: bold;
-        padding: 5px 10px;
-        transition: all ease 0.3s;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+        margin-top: 5px; /* فاصله بین تصویر و نوشته */
+      }
+      /* استایل تصاویر */
+      .navList img {
+        width: 50px;
+        aspect-ratio: 4/3;
+        object-fit: contain;
+        margin-bottom: 2px; /* کاهش فاصله از متن */
+        transition: transform 0.3s ease;
+      }
+      /* .navLog img {
+  height: 35px;
+} */
+      /* استایل نوشته‌های زیر عکس‌ها */
+      .iconDetail {
+        opacity: 0; /* پنهان کردن نوشته به صورت پیش‌فرض */
+        transform: translateY(5px); /* کاهش فاصله خط از نوشته */
+        transition: opacity 0.3s ease, transform 0.3s ease;
+        position: relative;
+        margin-bottom: 10px; /* فاصله بین نوشته و خط زیر آن */
       }
 
-      .navList .line {
+      /* استایل خط زیر نوشته‌ها */
+      .line {
         background-color: #adf;
         height: 3px;
-        pointer-events: none;
-        opacity: 0;
-        transition: all 0.5s cubic-bezier(1, 2, 0.2, 0.6);
+        width: 0; /* عرض پیش‌فرض خط، ممکن است نیاز به تغییر داشته باشد */
         position: absolute;
-        bottom: -13px; /* فاصله خط از متن */
-        left: 0;
-        width: 0;
+        bottom: 0; /* موقعیت افقی خط */
+        left: 0; /* موقعیت عمودی خط */
+        opacity: 0; /* پنهان کردن خط به‌طور پیش‌فرض */
+        transition: opacity 0.3s ease, width 0.3s ease; /* ترنزیشن برای opacity و width */
       }
-      .navList li:hover {
-        transform: scale(1.1);
-        transition: all 0.3s;
+
+      /* افکت هاور */
+      .navList li:hover img {
+        transform: translateY(-8px) scale(0.8); /* کوچک شدن و جابجایی تصویر */
       }
+
+      .navList li:hover .iconDetail {
+        opacity: 1; /* نمایش نوشته هنگام هاور */
+        transform: translateY(0); /* موقعیت نهایی نوشته */
+      }
+
       .navList li:hover .line {
+        width: 100%; /* افزایش عرض خط */
         opacity: 1;
       }
     </style>
   </head>
+
   <body>
     <nav>
       <div id="navBrand">
-        <h1>Belbin</h1>
+        <h1>
+          Belbin
+          <!--<img src="beblin.png" alt="" />-->
+        </h1>
+        <img src="" alt="" class="imgBrand" />
       </div>
       <div>
         <ul class="navList" style="--items: 6">
-          <li class="navLog">
-            <a href="{% url "home" %}">🏠</a><span class="line"></span>
-          </li>
           {% if user.is_authenticated %}
-          <li class="navLog"><a href="{% url "logout" %}">Logout</a><span class="line"></span></li>
-          <li class="navLog"><a href="#">welcome</a><span class="line"></span></li>
-          {% else %}
-          <li class="navLog">
-            <a href="{% url "login" %}">Log In</a><span class="line"></span>
+          <li class="navigationItem navLog">
+            <a href="{% url "logout" %}">
+              <img src="{% static 'logout.jpg' %}" alt="" />
+              <span class="iconDetail">Log out</span> </a
+            ><span class="line"></span>
           </li>
-          <li class="navigationItem">
-            <a href="{% url "signup" %}">Sign Up</a><span class="line"></span>
+          {% else %}
+          <li class="navigationItem navLog">
+            <a href="{% url "login" %}">
+              <img src="{% static 'Login.jpg' %}" alt="" />
+
+              <span class="iconDetail">Login</span></a
+            ><span class="line"></span>
+          </li>
+          <li class="navigationItem navLog">
+            <a href="{% url "signup" %}"
+              ><img src="{% static 'writing.jpg' %}" alt="" />
+              <span class="iconDetail">Sign up</span></a
+            ><span class="line"></span>
           </li>
           {% endif %} 
           <li class="navigationItem">
-            <a href="">About us</a><span class="line"></span>
+            <a href="{% url "home" %}"
+              ><img src="{% static 'home.jpg' %}" alt="" />
+              <span class="iconDetail">Home</span> </a
+            ><span class="line"></span>
+          </li>
+
+          <li class="navigationItem">
+            <a href="{% url "about" %}"
+              ><img src="{% static 'about.jpg' %}" alt="" />
+              <span class="iconDetail">About us</span> </a
+            ><span class="line"></span>
           </li>
           <li class="navigationItem">
-            <a href="">Contact us</a><span class="line"></span>
-            <li class="navigationItem">
-              <a href="">language</a><span class="line"></span>
-            </li>
+            <a href=""
+              ><img src="{% static 'lang.jpg' %}" alt="" /><span
+                class="iconDetail"
+                >language</span
+              ></a
+            ><span class="line"></span>
           </li>
         </ul>
       </div>
     </nav>
-    
-    <script src="{% static "js/script.js" %}"></script>
+    <script src="script.js"></script>
   </body>
 </html>
