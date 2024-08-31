@@ -32,26 +32,26 @@ def login_view(request):
 def MQ(request ):
     records =  MainQ.objects.all( )                               
     return render(request , 'ques.html' , {'records' : records} )
-def PQ(request , pk ):
+def fpq(request , pk ):
+    start = (pk-1) *8
+    end =start+8
+    records =  AggrQ.objects.all( )[start:end]                              
+    return render(request , 'new.html' , {'records' : records} )
+def PQ(request , pk , sec):
     main = MainQ.objects.get(id = pk)
-    
-    # # COULD USE GETMETHOD TO
-    start = (pk-1)*8
-    end = start+8
-    detail_records =  AggrQ.objects.all()[start:end]
+    detail_records =  AggrQ.objects.get(id= sec)
     if request.method == "POST":
         form = ScoreFormForm(request.POST)
-        for i in range(start , end):
-            if form.is_valid():
-                score_form = form.save(commit=False)
-                score_form.user = request.user
-                score_form.main_q = main
-                score_form.part_q =  detail_records[i+1]
-                score_form.save()
-            return redirect('home')
+        if form.is_valid():
+            score_form = form.save(commit=False)
+            score_form.user = request.user
+            score_form.main_q = main
+            score_form.part_q = detail_records
+            score_form.save()
+        return redirect('new.html')
     else:
         form = ScoreFormForm()
-    return render(request , 'qp.html' ,{'form' :form  , 'detail_records' : detail_records })
+    return render(request , 'qp.html' ,{'form' :form  })
 
 def signupUser(request ):
     form = UserRegisterForm()

@@ -8,7 +8,8 @@ urlpatterns = [
     path('login/', views.login_view, name='login'),
     path('logout/', views.logoutuser, name='logout'),
     path('ques/', views.MQ, name='ques'),
-    path('qp/<int:pk>/', views.PQ, name='qp'),
+    path('new/<int:pk>/', views.fpq, name='new'),
+    path('qp/<int:pk>/<int:sec>/', views.PQ, name='qp'),
     path('signup', views.signupUser, name='signup'),
 ]
 

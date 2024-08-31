@@ -1,4 +1,84 @@
-{% extends "base.html" %} {% block content %} {% load static %}<!DOCTYPE html>
+{% extends "base.html" %} {% block content %} {% load static %}
+<!-- question_slider.html -->
+<!DOCTYPE html>
+<html lang="fa">
+  <head>
+    <meta charset="UTF-8" />
+    <title>اسلایدر سؤالات</title>
+    <style>
+      .slider-container {
+        position: relative;
+        width: 80%;
+        margin: auto;
+        overflow: hidden;
+      }
+      .slider-wrapper {
+        display: flex;
+        transition: transform 0.5s ease-in-out;
+      }
+      .slider-item {
+        min-width: 100%;
+        box-sizing: border-box;
+      }
+      .slider-item h5 {
+        padding: 20px;
+        font-size: 20px;
+        text-align: center;
+      }
+      .prev,
+      .next {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background-color: rgba(0, 0, 0, 0.5);
+        color: white;
+        border: none;
+        padding: 10px;
+        cursor: pointer;
+      }
+      .prev {
+        left: 10px;
+      }
+      .next {
+        right: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>اسلایدر سؤالات</h1>
+    <div class="slider-container">
+      <div class="slider-wrapper">
+        {% for record in records %}
+        <div class="slider-item">
+          <h5 dir="rtl">{{ record.title }}</h5>
+          <a style="margin: 30%" href="{% url 'new' record.id %}"
+            ><p dir="rtl">امنیاز دهی به سوالات :</p></a
+          >
+        </div>
+        {% endfor %}
+      </div>
+      <button class="prev" onclick="moveSlide(-1)">قبلی</button>
+      <button class="next" onclick="moveSlide(1)">بعدی</button>
+    </div>
+
+    <script>
+      let slideIndex = 0;
+
+      function moveSlide(step) {
+        const slides = document.querySelectorAll(".slider-item");
+        const totalSlides = slides.length;
+        slideIndex = (slideIndex + step + totalSlides) % totalSlides;
+        const offset = -slideIndex * 100;
+        document.querySelector(
+          ".slider-wrapper"
+        ).style.transform = `translateX(${offset}%)`;
+      }
+
+      // Optional: Automatically move slide every 3 seconds
+    </script>
+  </body>
+</html>
+{% comment %}
 <html lang="fa-IR">
   <head>
     <meta charset="UTF-8" />
@@ -50,4 +130,4 @@
     </div>
   </body>
 </html>
-{% endblock %}
+{% endcomment %} {% endblock %}

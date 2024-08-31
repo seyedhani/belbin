@@ -1,4 +1,4 @@
-{% extends "base.html" %} {% block content %} {% load static %}<!DOCTYPE html>
+{% extends "base.html" %} {% block content %} {% load static %}
 <html lang="fa-IR">
   <head>
     <meta charset="UTF-8" />
@@ -36,16 +36,16 @@
     </header>
     <div class="container">
       <!-- Placeholder for dynamically loaded questions -->
-
+      {% for record in records %}
       <div class="question">
         <!-- Example question -->
-
-        <form method="post">
-          {% csrf_token %} {{ form.as_p }}
-          <button type="submit">Register</button>
-        </form>
+        <h5 dir="rtl">{{ record.qtext }}</h5>
+        <h5 dir="rtl">{{ record.main_q.id }}</h5>
+        <a style="margin: 30%" href="{% url 'qp' record.main_q.id record.id %}"
+          ><p dir="rtl">امنیاز دهی به سوالات :</p></a
+        >
       </div>
-
+      {% endfor %}
       <!-- More questions will go here -->
     </div>
   </body>
