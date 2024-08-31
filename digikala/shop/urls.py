@@ -10,6 +10,5 @@ urlpatterns = [
     path('ques/', views.MQ, name='ques'),
     path('qp/<int:pk>/', views.PQ, name='qp'),
     path('signup', views.signupUser, name='signup'),
-    path('account_form', views.UserScore, name='account_form'),
 ]
 

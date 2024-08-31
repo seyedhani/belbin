@@ -9,8 +9,8 @@ class UserRegisterForm(UserCreationForm):
     class Meta:
         model = User
         fields = ['username', 'email', 'password1', 'password2']
-class us(forms.Form):
-    score = forms.IntegerField(label="enter")
+class ScoreFormForm(forms.ModelForm):
     class Meta:
-        model = Account
-        fields = ('score' , )
+        model = ScoreForm
+        fields = [ 'part_q' ,  'Score']
+       

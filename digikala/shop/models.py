@@ -10,13 +10,10 @@ class AggrQ(models.Model):
     qtext = models.CharField(max_length=400)
     def __str__(self) :
         return self.qtext
-class Account(models.Model):
-    phone =models.CharField(max_length=250)
-    
-class Scores(models.Model):
-    user = models.ForeignKey(User , on_delete=models.CASCADE , related_name="score") 
-    section = models.ForeignKey(MainQ ,  on_delete=models.CASCADE)
-    question = models.ForeignKey(AggrQ ,  on_delete=models.CASCADE)
-    score = models.IntegerField()
-    def __str__(self) :
-        return self.user.first_name 
+        return self.title
+class ScoreForm(models.Model):
+    main_q = models.ForeignKey(MainQ , on_delete=models.CASCADE )
+    part_q = models.ForeignKey(AggrQ , on_delete=models.CASCADE)
+    user = models.ForeignKey(User , on_delete=models.CASCADE )
+    Score = models.IntegerField()
+  

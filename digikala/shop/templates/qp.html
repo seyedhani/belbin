@@ -39,8 +39,11 @@
       {% for item in detail_records %}
       <div class="question">
         <!-- Example question -->
-        <h5 dir="rtl">{{ item.qtext }}</h5>
-        <input type="number" id="quantity" name="quantity" min="0" max="10" />
+
+        <form method="post">
+          {% csrf_token %} {{ form.as_p }}
+          <button type="submit">Register</button>
+        </form>
       </div>
       {% endfor %}
       <!-- More questions will go here -->
