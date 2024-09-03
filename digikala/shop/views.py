@@ -30,8 +30,7 @@ def login_view(request):
     else:
         return render(request, 'login.html')
 def MQ(request ):
-    records =  MainQ.objects.all( )     
-                              
+    records =  MainQ.objects.all( )                           
     return render(request , 'ques.html' , {'records' : records} )
 def fpq(request , pk ):
     start = (pk-1) *8
@@ -44,12 +43,18 @@ def PQ(request , pk , sec):
     if request.method == "POST":
         form = ScoreFormForm(request.POST)
         if form.is_valid():
-            score_form = form.save(commit=False)
-            score_form.user = request.user
-            score_form.main_q = main
-            score_form.part_q = detail_records
+            same = ScoreForm.objects.filter(main_q = main ,part_q = detail_records ,  user =request.user ).first()
+            if same :
+                score_form = same
+                score_form.Score= form.cleaned_data.get('Score')
+            else :  
+                score_form = form.save(commit=False)
+                score_form.user = request.user
+                score_form.main_q = main
+                score_form.part_q = detail_records
             score_form.save()
-        return redirect('home')
+            records =  AggrQ.objects.all( )[sec::]   
+        return render(request , 'new.html' , {'records' : records} )
     else:
         form = ScoreFormForm()
     return render(request , 'qp.html' ,{'form' :form  })

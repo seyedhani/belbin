@@ -12,5 +12,5 @@ class UserRegisterForm(UserCreationForm):
 class ScoreFormForm(forms.ModelForm):
     class Meta:
         model = ScoreForm
-        fields = [  'Score']
+        fields = ['Score']
        
