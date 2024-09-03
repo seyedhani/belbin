@@ -1,166 +1,259 @@
-{% extends "base.html" %} {% block content %} {% load static %} {% comment %}
-<html lang="fa-IR">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Questions List</title>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        background-color: #e0f7fa; /* Light cyan background */
-        color: #004d40; /* Dark teal text */
-        margin: 0;
-        padding: 0;
-      }
-      header {
-        background-color: #004d40; /* Dark teal header */
-        color: #ffffff; /* White text */
-        padding: 15px;
-        text-align: center;
-      }
-      .container {
-        padding: 20px;
-      }
-      .question {
-        background-color: #a7ffeb; /* Light teal question background */
-        border: 1px solid #004d40; /* Dark teal border */
-        border-radius: 5px;
-        padding: 15px;
-        margin-bottom: 10px;
-      }
-    </style>
-  </head>
-  <body>
-    <header>
-      <h1>Questions from the Database</h1>
-    </header>
-    <div class="container">
-      <!-- Placeholder for dynamically loaded questions -->
-      {% for record in records %}
-      <div class="question">
-        <!-- Example question -->
-        <h5 dir="rtl">{{ record.qtext }}</h5>
-        <h5 dir="rtl">{{ record.main_q.id }}</h5>
-        <a style="margin: 30%" href="{% url 'qp' record.main_q.id record.id %}"
-          ><p dir="rtl">امنیاز دهی به سوالات :</p></a
-        >
-      </div>
-      {% endfor %}
-      <!-- More questions will go here -->
-    </div>
-  </body>
-</html>
-{% endcomment %}
-<!DOCTYPE html>
-<html lang="fa">
-  <head>
-    <meta charset="UTF-8" />
-    <title>اسلایدر سؤالات</title>
-    <style>
-      .slider-container {
-        position: relative;
-        width: 80%;
-        margin: auto;
-        overflow: hidden;
-      }
-      .slider-wrapper {
-        display: flex;
-        transition: transform 0.5s ease-in-out;
-      }
-      .slider-item {
-        min-width: 100%;
-        box-sizing: border-box;
-      }
-      .slider-item h5 {
-        padding: 20px;
-        font-size: 20px;
-        text-align: center;
-      }
-      .prev,
-      .next {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        background-color: rgba(0, 0, 0, 0.5);
-        color: white;
-        border: none;
-        padding: 10px;
-        cursor: pointer;
-      }
-      .prev {
-        left: 10px;
-      }
-      .next {
-        right: 10px;
-      }
-    </style>
-  </head>
-  <body>
-    {% if user.is_authenticated %}
-    <h1>اسلایدر سؤالات</h1>
-    <div class="slider-container">
-      <div class="slider-wrapper">
-        {% for record in records %}
-        <div class="slider-item">
-          <h1 dir="rtl">{{ record.main_q }}</h1>
-          <h5 dir="rtl">{{ record.qtext }}</h5>
-          <a href="{% url 'qp' record.main_q.id record.id %}"
-            ><p dir="rtl">امنیاز دهی به سوالات :</p></a
-          >
-          <div class="icon icon-animated" title="test"><a href="{% url "ques" %}">📃 دسته </a></div>
-        </div>
-        {% endfor %}
-      </div>
-      <button class="prev" onclick="moveSlide(-1)">قبلی</button>
-      <button class="next" onclick="moveSlide(1)">بعدی</button>
-    </div>
-    {% else %}
-    <a href="{% url "login" %}"><p dir="rtl">first log in</p></a>
-    {% endif %} 
+{% extends "base.html" %} {% block content %} {% load static %}
+<head>
+  <style>
+    @import url("https://fonts.googleapis.com/css?family=Poppins:300,400,600,700");
 
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        let slideIndex = 0;
+    body {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background-color: #61c90c; /* رنگ آبی پایه */
+      font-family: "Poppins", sans-serif;
+    }
     
-        function moveSlide(step) {
-            const slides = document.querySelectorAll(".slider-item");
-            const totalSlides = slides.length;
-           
-            // Check if slides exist
-            if (totalSlides === 0) {
-                return; // No slides to show
-            }
+    .slider-container {
+      position: relative;
+      width: 1000px;
+      height: 500px;
+      overflow: hidden;
+    }
     
-            // Update slideIndex with step and ensure it wraps around
-            slideIndex = (slideIndex + step + totalSlides) % totalSlides;
-           
-            // Calculate the offset for the slider-wrapper
-            const offset = -slideIndex * 100;
-           
-            // Apply transform to slide the wrapper
-            const sliderWrapper = document.querySelector(".slider-wrapper");
-            if (sliderWrapper) {
-                sliderWrapper.style.transform = `translateX(${offset}%)`;
-            }
+    .slider {
+      display: flex;
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transition: transform 1s ease-in-out;
+    }
+    
+    .card {
+      width: 1000px;
+      height: 500px;
+      position: absolute;
+      transition: opacity 1s ease, transform 1s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.3); /* پس‌زمینه شفاف */
+      backdrop-filter: blur(15px); /* ایجاد تاری برای شیشه‌ای شدن */
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* سایه کمی تیره‌تر */
+      border-radius: 30px;
+      border: 1px solid rgba(255, 255, 255, 0.3); /* حاشیه نازک برای حالت شیشه‌ای */
+      opacity: 0;
+      transform: translateX(100%);
+    }
+    
+    .card.active {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    
+    .card.previous {
+      opacity: 0;
+      transform: translateX(-100%);
+    }
+    .card .sliderText {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 150px;
+      width: 100%;
+      background: rgba(0, 102, 204, 0.7); /* آبی تیره‌تر با شفافیت */
+      backdrop-filter: blur(10px);
+      border-top-left-radius: 20px;
+      border-top-right-radius: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      margin-bottom: 10px;
+      position: relative; /* اضافه کردن position برای جابجایی */
+      top: -40px; /* بالا بردن .sliderText */
+    }
+    .card .sliderText h3 {
+      color: #fff;
+      font-size: 2em;
+      margin: 0;
+    }
+    
+    .card .content {
+      padding: 20px;
+      box-sizing: border-box;
+      text-align: center;
+      direction: rtl; /* راست چین برای متن فارسی */
+    }
+    
+    .card .content p {
+      margin: 0;
+      color: #333; /* رنگ متن */
+      font-size: 20px; /* تغییر اندازه فونت */
+      position: relative; /* اضافه کردن position برای جابجایی */
+      top: -20px; /* بالا بردن p */
+    }
+    
+    .action-btn {
+      display: inline-block;
+      padding: 10px 20px;
+      margin-top: 10px;
+      text-decoration: none;
+      border: none;
+      border-radius: 5px;
+      background-color: #1e90ff; /* رنگ آبی فیروزه‌ای */
+      color: white;
+      font-size: 1em;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.3s ease,
+        box-shadow 0.3s ease;
+    }
+    
+    .action-btn:hover {
+      background-color: #0056b3; /* رنگ آبی تیره‌تر */
+      transform: scale(1.05); /* بزرگ کردن دکمه هنگام Hover */
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* سایه بزرگتر */
+    }
+    
+    .slider-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0, 0, 0, 0.5);
+      color: white;
+      border: none;
+      padding: 10px;
+      cursor: pointer;
+      z-index: 1000;
+      border-radius: 5px;
+      transition: background 0.3s ease;
+    }
+    
+    .left-btn {
+      left: 10px;
+    }
+    
+    .right-btn {
+      right: 10px;
+    }
+    
+    .slider-btn:hover {
+      background: rgba(0, 0, 0, 0.8);
+    }
+    
+  
+</style>
+</head>
+<body>
+  <div class="slider-container">
+    <button class="slider-btn left-btn">&#10094;</button>
+    <div class="slider">
+      <!-- اسلایدها -->
+      <div class="card">
+        <div class="sliderText">
+          <h3>Slide One</h3>
+        </div>
+        <div class="content">
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+          <a href="#" class="action-btn">Submit</a>
+        </div>
+      </div>
+      <div class="card">
+        <div class="sliderText">
+          <h3>Slide Two</h3>
+        </div>
+        <div class="content">
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+          <a href="#" class="action-btn">Submit</a>
+        </div>
+      </div>
+      <div class="card">
+        <div class="sliderText">
+          <h3>Slide Three</h3>
+        </div>
+        <div class="content">
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+          <a href="#" class="action-btn">Submit</a>
+        </div>
+      </div>
+      <div class="card">
+        <div class="sliderText">
+          <h3>Slide Four</h3>
+        </div>
+        <div class="content">
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+          <a href="#" class="action-btn">Submit</a>
+        </div>
+      </div>
+      <div class="card">
+        <div class="sliderText">
+          <h3>Slide Five</h3>
+        </div>
+        <div class="content">
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+          <a href="#" class="action-btn">Submit</a>
+        </div>
+      </div>
+      <div class="card">
+        <div class="sliderText">
+          <h3>Slide Six</h3>
+        </div>
+        <div class="content">
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+          <a href="#" class="action-btn">Submit</a>
+        </div>
+      </div>
+      <div class="card">
+        <div class="sliderText">
+          <h3>Slide Seven</h3>
+        </div>
+        <div class="content">
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+          <a href="#" class="action-btn">Submit</a>
+        </div>
+      </div>
+    </div>
+    <button class="slider-btn right-btn">&#10095;</button>
+  </div>
+  <script>
+    const cards = document.querySelectorAll(".card");
+    const leftBtn = document.querySelector(".left-btn");
+    const rightBtn = document.querySelector(".right-btn");
+    let currentIndex = 0;
+
+    // تابع برای نمایش اسلاید فعلی
+    function showSlide(index) {
+      cards.forEach((card, i) => {
+        if (i === index) {
+          card.classList.add("active");
+          card.classList.remove("next", "previous");
+        } else {
+          card.classList.remove("active");
+          if (i === (currentIndex + 1) % cards.length) {
+            card.classList.add("next");
+          } else if (i === (currentIndex - 1 + cards.length) % cards.length) {
+            card.classList.add("previous");
+          } else {
+            card.classList.remove("next", "previous");
+          }
         }
-    
-        // Attach click event handlers
-        const prevButton = document.querySelector('.prev');
-        const nextButton = document.querySelector('.next');
-    
-        if (prevButton) {
-            prevButton.addEventListener('click', function() {
-                moveSlide(-1);
-            });
-        }
-    
-        if (nextButton) {
-            nextButton.addEventListener('click', function() {
-                moveSlide(1);
-            });
-        }
+      });
+    }
+
+    // نمایش اولین اسلاید به‌طور پیش‌فرض
+    showSlide(currentIndex);
+
+    // تغییر اسلاید به سمت راست
+    rightBtn.addEventListener("click", () => {
+      currentIndex = (currentIndex + 1) % cards.length;
+      showSlide(currentIndex);
     });
-    </script>
-  </body>
+
+    // تغییر اسلاید به سمت چپ
+    leftBtn.addEventListener("click", () => {
+      currentIndex = (currentIndex - 1 + cards.length) % cards.length;
+      showSlide(currentIndex);
+    });
+  </script>
+</body>
 </html>
- {% endblock %}
+{% endblock %}
