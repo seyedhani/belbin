@@ -150,14 +150,18 @@
       <div class="slider">
         <!-- اسلایدها -->
         {% for record in records %}
+        
           <div class="card">
           <div class="sliderText">
             <h3>{{ record.main_q }}</h3>
           </div>
           <div class="content">
-            <p>{{record.qtext }}</p>
+            <p>{{ record.qtext }}</p>
       
             <a href="{% url 'qp' record.main_q.id record.id %}" class="action-btn">Submit</a>
+            <br><br><br><br>
+            <a href="{% url 'ques' %}" >{% include "messages.html" %} </a>
+            
           </div>
         </div>
         {% endfor %}
