@@ -1,0 +1,142 @@
+{% load static %} {% include "base.html" %} {% block content %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>سوالات</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        $("form").submit(function (event) {
+          event.preventDefault(); // جلوگیری از بارگذاری مجدد صفحه
+
+          var form = $(this);
+          $.ajax({
+            url: form.attr("action"),
+            type: "POST",
+            data: form.serialize(),
+            success: function (response) {
+              var messageElement = $("#message");
+              if (response.status === "error") {
+                messageElement
+                  .text(response.message)
+                  .removeClass()
+                  .addClass("error-message")
+                  .show();
+              } else if (response.status === "warning") {
+                messageElement
+                  .text(response.message)
+                  .removeClass()
+                  .addClass("warning-message")
+                  .show();
+              } else if (response.status === "success") {
+                messageElement
+                  .text(response.message)
+                  .removeClass()
+                  .addClass("success-message")
+                  .show();
+                // می‌توانید صفحه را به‌روزرسانی کنید یا به بخش دیگری هدایت کنید
+              }
+            },
+            error: function () {
+              $("#message")
+                .text("An error occurred")
+                .removeClass()
+                .addClass("error-message")
+                .show();
+            },
+          });
+        });
+      });
+    </script>
+    <style>
+      /* CSS داخلی */
+
+     
+
+      h1 {
+        color: #333;
+      }
+
+      .questions-container {
+   
+        margin-top: 20px;
+      }
+
+      .question-box {
+       
+        border: 1px solid #ddd;
+        padding: 15px;
+        margin-bottom: 15px;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+      }
+
+      #message {
+        padding: 10px;
+        margin-bottom: 15px;
+        border-radius: 5px;
+        display: none; /* مخفی به صورت پیش‌فرض */
+      }
+
+      .error-message {
+        background-color: #f8d7da;
+        color: #721c24;
+      }
+
+      .warning-message {
+        background-color: #fff3cd;
+        color: #856404;
+      }
+
+      .success-message {
+        background-color: #d4edda;
+        color: #155724;
+      }
+
+      .action-btn {
+        display: inline-block;
+        padding: 10px 20px;
+        margin-top: 20px;
+        background-color: #007bff;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 5px;
+      }
+
+      .action-btn:hover {
+        background-color: #0056b3;
+      }
+    </style>
+  </head>
+  <body>
+    {% if main %}
+  
+
+    <h1 dir='rtl'>{{ main.title }}</h1>
+    {% endif %}
+    <div id="message"></div>
+    <!-- بخش نمایش پیام -->
+    <div class="questions-container" dir='rtl' >
+      {% for record in records %}
+      <div class="question-box"  >
+        
+        <p>{{ record.qtext }}</p>
+        <!-- فرم امتیازدهی برای هر سوال -->
+        <form method="POST" action=".">
+          {% csrf_token %}
+          <input type="hidden" name="question_id" value="{{ record.id }}" />
+          {{ form.as_p }}
+          <button type="submit" >ارسال امتیاز</button>
+        </form>
+      </div>
+      {% endfor %}
+    </div style="display:inline;">
+    {% for m in mq %}
+    <a href="{% url 'ux' m.id  %}" class="action-btn" >سوالات بخش {{m.id }}</a>
+    {% endfor %}
+    <a href="{% url 'show'   %}" class="action-btn" >done</a>
+  </body>
+</html>
+{% endblock %}

@@ -157,7 +157,7 @@
           </div>
           <div class="content">
             <p>{{ record.qtext }}</p>
-      
+          
             <a href="{% url 'qp' record.main_q.id record.id %}" class="action-btn">Submit</a>
             <br><br><br><br>
             <a href="{% url 'ques' %}" >{% include "messages.html" %} </a>
@@ -211,117 +211,4 @@
   </body>
 </html>
 
-{% comment %} <!DOCTYPE html>
-<html lang="fa">
-  <head>
-    <meta charset="UTF-8" />
-    <title>اسلایدر سؤالات</title>
-    <style>
-      .slider-container {
-        position: relative;
-        width: 80%;
-        margin: auto;
-        overflow: hidden;
-      }
-      .slider-wrapper {
-        display: flex;
-        transition: transform 0.5s ease-in-out;
-      }
-      .slider-item {
-        min-width: 100%;
-        box-sizing: border-box;
-      }
-      .slider-item h5 {
-        padding: 20px;
-        font-size: 20px;
-        text-align: center;
-      }
-      .prev,
-      .next {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        background-color: rgba(0, 0, 0, 0.5);
-        color: white;
-        border: none;
-        padding: 10px;
-        cursor: pointer;
-      }
-      .prev {
-        left: 10px;
-      }
-      .next {
-        right: 10px;
-      }
-    </style>
-  </head>
-  <body>
-    {% if user.is_authenticated %}
-    <h1>اسلایدر سؤالات</h1>
-    <div class="slider-container">
-      <div class="slider-wrapper">
-        {% for record in records %}
-        <div class="slider-item">
-          <h1 dir="rtl">{{ record.main_q }}</h1>
-          <h5 dir="rtl">{{ record.qtext }}</h5>
-          <a href="{% url 'qp' record.main_q.id record.id %}"
-            ><p dir="rtl">امنیاز دهی به سوالات :</p></a
-          >
-          <div class="icon icon-animated" title="test"><a href="{% url "ques" %}">📃 دسته </a></div>
-        </div>
-        {% endfor %}
-      </div>
-      <button class="prev" onclick="moveSlide(-1)">قبلی</button>
-      <button class="next" onclick="moveSlide(1)">بعدی</button>
-    </div>
-    {% else %}
-    <a href="{% url "login" %}"><p dir="rtl">first log in</p></a>
-    {% endif %} 
-
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        let slideIndex = 0;
-    
-        function moveSlide(step) {
-            const slides = document.querySelectorAll(".slider-item");
-            const totalSlides = slides.length;
-           
-            // Check if slides exist
-            if (totalSlides === 0) {
-                return; // No slides to show
-            }
-    
-            // Update slideIndex with step and ensure it wraps around
-            slideIndex = (slideIndex + step + totalSlides) % totalSlides;
-           
-            // Calculate the offset for the slider-wrapper
-            const offset = -slideIndex * 100;
-           
-            // Apply transform to slide the wrapper
-            const sliderWrapper = document.querySelector(".slider-wrapper");
-            if (sliderWrapper) {
-                sliderWrapper.style.transform = `translateX(${offset}%)`;
-            }
-        }
-    
-        // Attach click event handlers
-        const prevButton = document.querySelector('.prev');
-        const nextButton = document.querySelector('.next');
-    
-        if (prevButton) {
-            prevButton.addEventListener('click', function() {
-                moveSlide(-1);
-            });
-        }
-    
-        if (nextButton) {
-            nextButton.addEventListener('click', function() {
-                moveSlide(1);
-            });
-        }
-    });
-    
-</script>
-  </body>
-</html> {% endcomment %}
  {% endblock %}

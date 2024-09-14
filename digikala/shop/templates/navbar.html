@@ -8,13 +8,10 @@
     <style>
       /* بارگذاری فونت از Google Fonts با @import */
       @import url("https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap");
-
+      
       /* تنظیم فونت برای کل بدنه */
-      body {
-        font-family: "lato";
-        font-weight: 600;
-      }
-
+      
+      
       /* تنظیمات کلی برای بدنه و بک‌گراند صفحه */
       body {
         margin: 0;
@@ -23,10 +20,12 @@
           url("https://via.placeholder.com/1500");
         background-size: cover, cover;
         background-blend-mode: overlay;
+        font-family: "lato";
+        font-weight: 600;
       }
       /* استایل نوار ناوبری */
       nav {
-        background-color: #ffffff;
+        background-color: rgba(255, 255, 255, 0.1);
         backdrop-filter: blur(10px);
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         padding: 10px 20px;
@@ -34,7 +33,7 @@
         align-items: center; /* مرکز کردن عمودی */
         justify-content: space-between; /* تقسیم فضای موجود بین برند و لیست ناوبری */
         position: relative; /* اطمینان از نوار ثابت */
-     
+        margin-bottom: 20px; /*فاصله نوبار به دلخواه خودت*/
       }
       /* استایل برند */
       #navBrand {
@@ -42,15 +41,15 @@
         align-items: center; /* تراز عمودی برای برند و تصویر */
         position: relative; /* برای استفاده از position: absolute در تصویر */
       }
-
+      
       #navBrand h1 {
         margin: 0;
-        color: #000000;
+        color: #1c39bb;
         font-size: xx-large;
         text-transform: uppercase;
         z-index: 1; /* متن در جلو باشد */
       }
-
+      
       /* استایل تصویر برند */
       .imgBrand {
         width: 50px; /* اندازه تصویر */
@@ -63,7 +62,7 @@
         z-index: 0; /* قرار دادن تصویر در پس‌زمینه نسبت به متن */
       }
       /* استایل لیست ناوبری */
-
+      
       .navList {
         list-style: none;
         margin: 0;
@@ -78,7 +77,7 @@
         justify-content: center; /* مرکز چینش افقی */
         position: relative;
       }
-
+      
       /* استایل لینک‌ها */
       .navList a {
         text-decoration: none;
@@ -98,8 +97,8 @@
         transition: transform 0.3s ease;
       }
       /* .navLog img {
-  height: 35px;
-} */
+        height: 35px;
+      } */
       /* استایل نوشته‌های زیر عکس‌ها */
       .iconDetail {
         opacity: 0; /* پنهان کردن نوشته به صورت پیش‌فرض */
@@ -108,7 +107,7 @@
         position: relative;
         margin-bottom: 10px; /* فاصله بین نوشته و خط زیر آن */
       }
-
+      
       /* استایل خط زیر نوشته‌ها */
       .line {
         background-color: #adf;
@@ -120,17 +119,17 @@
         opacity: 0; /* پنهان کردن خط به‌طور پیش‌فرض */
         transition: opacity 0.3s ease, width 0.3s ease; /* ترنزیشن برای opacity و width */
       }
-
+      
       /* افکت هاور */
       .navList li:hover img {
         transform: translateY(-8px) scale(0.8); /* کوچک شدن و جابجایی تصویر */
       }
-
+      
       .navList li:hover .iconDetail {
         opacity: 1; /* نمایش نوشته هنگام هاور */
         transform: translateY(0); /* موقعیت نهایی نوشته */
       }
-
+      
       .navList li:hover .line {
         width: 100%; /* افزایش عرض خط */
         opacity: 1;
@@ -151,41 +150,41 @@
           {% if user.is_authenticated %}
           <li class="navigationItem navLog">
             <a href="{% url "logout" %}">
-              <img src="{% static 'logout.jpg' %}" alt="" />
+              <img src="{% static 'logout.png' %}" alt="" />
               <span class="iconDetail">Log out</span> </a
             ><span class="line"></span>
           </li>
           {% else %}
           <li class="navigationItem navLog">
             <a href="{% url "login" %}">
-              <img src="{% static 'Login.jpg' %}" alt="" />
+              <img src="{% static 'Login.png' %}" alt="" />
 
               <span class="iconDetail">Login</span></a
             ><span class="line"></span>
           </li>
           <li class="navigationItem navLog">
             <a href="{% url "signup" %}"
-              ><img src="{% static 'writing.jpg' %}" alt="" />
+              ><img src="{% static 'writing.png' %}" alt="" />
               <span class="iconDetail">Sign up</span></a
             ><span class="line"></span>
           </li>
           {% endif %} 
           <li class="navigationItem">
             <a href="{% url "home" %}"
-              ><img src="{% static 'home.jpg' %}" alt="" />
+              ><img src="{% static 'home.png' %}" alt="" />
               <span class="iconDetail">Home</span> </a
             ><span class="line"></span>
           </li>
 
           <li class="navigationItem">
             <a href="{% url "about" %}"
-              ><img src="{% static 'about.jpg' %}" alt="" />
+              ><img src="{% static 'about.png' %}" alt="" />
               <span class="iconDetail">About us</span> </a
             ><span class="line"></span>
           </li>
           <li class="navigationItem">
             <a href=""
-              ><img src="{% static 'lang.jpg' %}" alt="" /><span
+              ><img src="{% static 'about.png' %}" alt="" /><span
                 class="iconDetail"
                 >language</span
               ></a

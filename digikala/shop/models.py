@@ -10,10 +10,18 @@ class AggrQ(models.Model):
     qtext = models.CharField(max_length=400)
     def __str__(self) :
         return self.qtext
-        return self.title
+       
 class ScoreForm(models.Model):
     main_q = models.ForeignKey(MainQ , on_delete=models.CASCADE )
     part_q = models.ForeignKey(AggrQ , on_delete=models.CASCADE)
     user = models.ForeignKey(User , on_delete=models.CASCADE )
     Score = models.IntegerField()
   
+class Result(models.Model):
+    summery = models.CharField(max_length=1000)
+    feature = models.CharField(max_length=1000)
+    weakness = models.CharField(max_length=1000)
+    powers = models.CharField(max_length=1000)
+    def __str__(self) :
+        return self.summery
+       

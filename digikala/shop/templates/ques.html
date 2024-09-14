@@ -1,138 +1,71 @@
 {% extends "base.html" %} {% block content %} {% load static %}
-<!-- question_slider.html -->
 <!DOCTYPE html>
 <html lang="fa">
   <head>
     <meta charset="UTF-8" />
-    <title>اسلایدر سؤالات</title>
-    <style>
-      .slider-container {
-        position: relative;
-        width: 80%;
-        margin: auto;
-        overflow: hidden;
-        background-color: rgba(0, 3, 0, 0.5);
-      }
-      .slider-wrapper {
-        display: flex;
-        transition: transform 0.5s ease-in-out;
-      }
-      .slider-item {
-        min-width: 100%;
-        box-sizing: border-box;
-      }
-      .slider-item h5 {
-        padding: 20px;
-        font-size: 20px;
-        text-align: center;
-      }
-      .prev,
-      .next {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        background-color: rgba(0, 0, 0, 0.5);
-        color: white;
-        border: none;
-        padding: 10px;
-        cursor: pointer;
-      }
-      .prev {
-        left: 10px;
-      }
-      .next {
-        right: 10px;
-      }
-    </style>
-  </head>
-  <body>
-    {% if user.is_authenticated %}
-    <h1>اسلایدر سؤالات</h1>
-    <div class="slider-container">
-      <div class="slider-wrapper">
-        {% for record in records %}
-        <div class="slider-item">
-          <h5 dir="rtl">{{ record.title }}</h5>
-          <a style="margin: 30%" href="{% url 'new' record.id %}"
-            ><p dir="rtl">امنیاز دهی به سوالات :</p></a
-          >
-        </div>
-        {% endfor %}
-      </div>
-      <button class="prev" onclick="moveSlide(-1)">قبلی</button>
-      <button class="next" onclick="moveSlide(1)">بعدی</button>
-    </div>
-    {% else %}
-    <a href="{% url "login" %}"><p dir="rtl">first log in</p></a>
-    {% endif %} 
-
-    <script>
-      let slideIndex = 0;
-
-      function moveSlide(step) {
-        const slides = document.querySelectorAll(".slider-item");
-        const totalSlides = slides.length;
-        slideIndex = (slideIndex + step + totalSlides) % totalSlides;
-        const offset = -slideIndex * 100;
-        document.querySelector(
-          ".slider-wrapper"
-        ).style.transform = `translateX(${offset}%)`;
-      }
-
-      // Optional: Automatically move slide every 3 seconds
-    </script>
-  </body>
-</html>
-{% comment %}
-<html lang="fa-IR">
-  <head>
-    <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Questions List</title>
+    <title>دکمه با انیمیشن</title>
     <style>
-      body {
-        font-family: Arial, sans-serif;
-        background-color: #e0f7fa; /* Light cyan background */
-        color: #004d40; /* Dark teal text */
-        margin: 0;
-        padding: 0;
-      }
-      header {
-        background-color: #004d40; /* Dark teal header */
-        color: #ffffff; /* White text */
-        padding: 15px;
+      /* تنظیمات کلی صفحه */
+
+      .container {
         text-align: center;
       }
-      .container {
-        padding: 20px;
+
+      /* استایل دکمه */
+      .animated-btn {
+        background-color: #007bff;
+        border: none;
+        color: white;
+        padding: 15px 30px;
+        font-size: 18px;
+        border-radius: 50px;
+        cursor: pointer;
+        transition: transform 0.3s ease, background-color 0.3s ease;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
       }
-      .question {
-        background-color: #a7ffeb; /* Light teal question background */
-        border: 1px solid #004d40; /* Dark teal border */
-        border-radius: 5px;
-        padding: 15px;
-        margin-bottom: 10px;
+
+      /* انیمیشن هاور (هنگام نگه داشتن موس روی دکمه) */
+      .animated-btn:hover {
+        background-color: #0056b3;
+        transform: scale(1.1);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+      }
+
+      /* انیمیشن کلیک (هنگام فشردن دکمه) */
+      .animated-btn:active {
+        transform: scale(0.95);
       }
     </style>
   </head>
   <body>
-    <header>
-      <h1>Questions from the Database</h1>
-    </header>
-    <div class="container">
-      <!-- Placeholder for dynamically loaded questions -->
-      {% for record in records %}
-      <div class="question">
-        <!-- Example question -->
-        <h5 dir="rtl">{{ record.title }}</h5>
-
-        <a href="{% url 'qp' record.id %}"
-          ><p dir="rtl">امنیاز دهی به سوالات :</p></a
-        >
-      </div>
-      {% endfor %}
-      <!-- More questions will go here -->
+    {% if all_scored %}
+    <p>جمع امتیاز ها باید زیر ده باشد</p>
+    {% for record in records %}
+    <div>
+      <p>{{ record.qtext }}</p>
     </div>
+    <div class="container">
+      <a href="{% url 'ux' record.main_q.id %}">
+        <button class="animated-btn">{{ m }}</button>
+      </a>
+    </div>
+    {% endfor %} {% for a in all %}
+    <div>
+      <p>امتیاز:{{ a }}</p>
+    </div>
+
+    {% endfor %} {% else %} {% for record in records %}
+
+    <p class="container">ب برخی سوالات جواب ندارید</p>
+    <div class="container">
+      <a href="{% url 'ux' record.main_q.id %}">
+        <button class="animated-btn">{{ m }}</button>
+      </a>
+    </div>
+
+    {% endfor %} {% endif %}
   </body>
 </html>
-{% endcomment %} {% endblock %}
+
+{% endblock %}

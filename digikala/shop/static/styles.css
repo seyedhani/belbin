@@ -1,0 +1,20 @@
+#message {
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  display: none; /* مخفی به صورت پیش‌فرض */
+}
+.error-message {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.warning-message {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.success-message {
+  background-color: #d4edda;
+  color: #155724;
+}
