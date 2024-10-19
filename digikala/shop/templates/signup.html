@@ -1,15 +1,255 @@
 {% extends "base.html" %} {% block content %} {% load static %}
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <title>Register</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login Form</title>
+    <style>
+      body {
+        background-color: rgb(211, 211, 211);
+        margin: 0;
+        padding: 0;
+        font-family: sans-serif;
+      }
+
+      .box {
+        width: 500px;
+        height: 400px;
+        padding: 20px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: white;
+        backdrop-filter: blur(10px);
+        background-color: rgba(47, 47, 47, 0.1);
+        border-radius: 4rem;
+        box-shadow: 5px 5px 50px 15px rgba(252, 5, 5, 0.699);
+        animation: animationBg 5s linear infinite;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center; /* تنظیم محتوای فرم به مرکز */
+      }
+
+      @keyframes animationBg {
+        100% {
+          filter: hue-rotate(360deg);
+        }
+      }
+
+      .box input {
+        border: 0;
+        background-color: none;
+        display: block;
+        margin: 10px 0; /* کاهش فاصله بین ورودی‌ها */
+        text-align: center;
+        border: 3px solid #0399fd;
+        padding: 14px 10px;
+        width: 200px;
+        outline: none;
+        color: rgb(1, 1, 1);
+        border-radius: 24px;
+        transition: width 0.25s; /* ترنزیشن برای تغییر عرض */
+      }
+
+      .box input:focus {
+        width: 280px; /* عرض بزرگتر هنگام فوکوس */
+        border-color: #04fb6b;
+        transition: width 0.8s; /* ترنزیشن برای تغییر عرض */
+      }
+
+      .box button {
+        background: none;
+        display: block;
+        margin: 20px auto;
+        text-align: center;
+        font-size: 100%;
+        border: 3px solid #04fb6b;
+        padding: 14px 40px;
+        outline: none;
+        color: rgb(0, 0, 0);
+        border-radius: 24px;
+        transition: background-color 0.25s;
+        cursor: pointer;
+      }
+
+      .box button:hover {
+        background-color: #04fb6b;
+      }
+
+      #password1-strength,
+      #password1-error,
+      #username-error {
+        display: none; /* پنهان کردن به طور پیش‌فرض */
+        transition: opacity 0.3s ease;
+      }
+
+      #password1-strength.visible,
+      #password1-error.visible,
+      #username-error.visible {
+        display: block; /* نمایش وقتی کلاس visible اضافه می‌شود */
+        color: #ff0000;
+      }
+
+      .strong {
+        color: #04fb6b; /* رنگ سبز برای رمز عبور قوی */
+      }
+
+      .medium {
+        color: #ffcc00; /* رنگ زرد برای رمز عبور متوسط */
+      }
+
+      .weak {
+        color: #ff0000; /* رنگ قرمز برای رمز عبور ضعیف */
+      }
+
+      #error {
+        color: #ff0000; /* رنگ پیغام خطا */
+        font-size: 0.9em;
+      }
+    </style>
   </head>
   <body>
-    <h2>Register</h2>
-    <form method="post">
-      {% csrf_token %} {{ form.as_p }}
-      <button type="submit">Register</button>
+    <form method="POST" class="box">
+      {% csrf_token %}
+      <h1>Register</h1>
+      <div>
+        <label for="id_username">Username</label>
+        {{ form.username }}
+        <!-- فقط فیلد ورودی را نمایش می‌دهد -->
+        <div id="username-error" class="error-message"></div>
+        <!-- نمایش خطا برای نام کاربری -->
+      </div>
+
+      <div>
+        <label for="id_password1">Password</label>
+        {{ form.password1 }}
+        <!-- فقط فیلد ورودی را نمایش می‌دهد -->
+        <div id="password-strength" class="strength-message"></div>
+        <!-- نمایش قدرت رمز عبور -->
+        <div id="password-error" class="error-message"></div>
+        <!-- نمایش خطا برای رمز عبور -->
+      </div>
+
+      <div>
+        <label for="id_password2">Confirm Password</label>
+        {{ form.password2 }}
+        <!-- فقط فیلد ورودی را نمایش می‌دهد -->
+      </div>
+
+      <a href="{% url 'login' %}"><button type="submit">Register</button></a>
     </form>
+    <p>رمز شما باید شامل یک حرف یزرگ و عدد باشذ و بانام کاربری فرق کند</p>
+
+    <script>
+      document
+        .getElementById("id_password1")
+        .addEventListener("focus", function () {
+          document.getElementById("password-strength").classList.add("visible");
+          document.getElementById("password-error").classList.add("visible");
+          this.style.width = "280px";
+        });
+
+      document
+        .getElementById("id_password1")
+        .addEventListener("blur", function () {
+          document
+            .getElementById("password-strength")
+            .classList.remove("visible");
+          document.getElementById("password-error").classList.remove("visible");
+          this.style.width = "200px";
+        });
+
+      document
+        .getElementById("id_username")
+        .addEventListener("focus", function () {
+          this.style.width = "280px";
+        });
+
+      document
+        .getElementById("id_username")
+        .addEventListener("blur", function () {
+          this.style.width = "200px";
+        });
+
+      document
+        .getElementById("id_password1")
+        .addEventListener("input", function () {
+          const password = this.value;
+          const strengthDisplay = document.getElementById("password-strength");
+          const passwordError = document.getElementById("password-error");
+
+          let strength = 0;
+
+          if (/[A-Z]/.test(password)) {
+            strength++;
+          }
+
+          if (/\d/.test(password)) {
+            strength++;
+          }
+
+          if (/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
+            strength++;
+          }
+
+          if (password.length >= 8) {
+            strength++;
+            passwordError.textContent = ""; // پاک کردن پیام خطا
+          } else {
+            passwordError.textContent =
+              "Password must be at least 8 characters long.";
+          }
+
+          if (strength === 4) {
+            strengthDisplay.textContent = "Strong";
+            strengthDisplay.className = "strong visible";
+          } else if (strength === 3) {
+            strengthDisplay.textContent = "Medium";
+            strengthDisplay.className = "medium visible";
+          } else {
+            strengthDisplay.textContent = "Weak";
+            strengthDisplay.className = "weak visible";
+          }
+        });
+
+      document
+        .getElementById("id_password1")
+        .addEventListener("input", function (e) {
+          this.value = this.value.replace(/[\u0600-\u06FF]/g, ""); // حذف حروف فارسی
+        });
+
+      document
+        .getElementById("id_username")
+        .addEventListener("input", function () {
+          const username = this.value;
+          const usernameError = document.getElementById("username-error");
+
+          if (username.length >= 4) {
+            usernameError.textContent = ""; // پاک کردن پیام خطا
+          } else {
+            usernameError.textContent =
+              "Username must be at least 4 characters long.";
+          }
+        });
+
+      document
+        .getElementById("id_username")
+        .addEventListener("focus", function () {
+          this.style.width = "280px";
+          document.getElementById("username-error").classList.add("visible");
+        });
+
+      document
+        .getElementById("id_username")
+        .addEventListener("blur", function () {
+          this.style.width = "200px";
+          document.getElementById("username-error").classList.remove("visible");
+        });
+    </script>
   </body>
 </html>
 {% endblock %}

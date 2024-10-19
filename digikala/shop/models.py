@@ -22,6 +22,18 @@ class Result(models.Model):
     feature = models.CharField(max_length=1000)
     weakness = models.CharField(max_length=1000)
     powers = models.CharField(max_length=1000)
+    
+class SuperUser(models.Model):
+    gender_choices=(
+        ('man', 'man'),
+        ('woman' , 'woman'),
+        ('rather not to say' ,'rather not to say' ),
+        
+    )
+    user_id = models.ForeignKey(User , on_delete=models.CASCADE)
+    result = models.ForeignKey(Result ,on_delete=models.CASCADE)
+    phone_numb = models.CharField(max_length=12)
+    gender =models.CharField(max_length=30 , choices=gender_choices ,default='man')
+    date = models.DateField( default=datetime.date.today)
     def __str__(self) :
-        return self.summery
-       
+        return self.user_id.username

@@ -1,4 +1,233 @@
 {% extends "base.html" %} {% block content %} {% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login Form</title>
+    <style>
+      body {
+      background-color:rgb(211, 211, 211);
+      margin: 0;
+      padding: 0;
+      font-family: sans-serif;
+   
+    }
+    
+    .box {
+      width: 500px;
+      height: 400px;
+      padding: 20px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: white;
+      backdrop-filter: blur(10px);
+      background-color: rgba(47, 47, 47, 0.1);
+      border-radius:4rem;                                                        
+      box-shadow: 5px 5px 50px 15px rgba(252, 5, 5, 0.699);
+      animation: animationBg 5s linear infinite;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center; /* تنظیم محتوای فرم به مرکز */
+    }
+    
+    @keyframes animationBg {
+      100% {
+        filter: hue-rotate(360deg);
+      }
+    }
+    
+    .box input {
+      border: 0;
+      background-color: none;
+      display: block;
+      margin: 10px 0; /* کاهش فاصله بین ورودی‌ها */
+      text-align: center;
+      border: 3px solid #0399fd;
+      padding: 14px 10px;
+      width: 200px;
+      outline: none;
+      color: rgb(0, 0, 0);
+      border-radius: 24px;
+      transition: width 0.25s; /* ترنزیشن برای تغییر عرض */
+    }
+    
+    .box input:focus {
+      width: 280px; /* عرض بزرگتر هنگام فوکوس */
+      border-color: #04fb6b;
+      transition: width 0.8s; /* ترنزیشن برای تغییر عرض */
+    }
+    
+    .box input[type="submit"] {
+      background: none;
+      display: block;
+      margin: 20px auto;
+      text-align: center;
+      font-size: 100%;
+      border: 3px solid #04fb6b;
+      padding: 14px 40px;
+      outline: none;
+      color: rgb(0, 0, 0);
+      border-radius: 24px;
+      transition: background-color 0.25s;
+      cursor: pointer;
+    }
+    
+    .box input[type="submit"]:hover {
+      background-color: #04fb6b;
+    }
+    
+    #password-strength,
+    #password-error,
+    #username-error {
+      display: none; /* پنهان کردن به طور پیش‌فرض */
+      transition: opacity 0.3s ease;
+    }
+    
+    #password-strength.visible,
+    #password-error.visible,
+    #username-error.visible {
+      display: block; /* نمایش وقتی کلاس visible اضافه می‌شود */
+      color: #ff0000;
+    }
+    
+    .strong {
+      color: #04fb6b; /* رنگ سبز برای رمز عبور قوی */
+    }
+    
+    .medium {
+      color: #ffcc00; /* رنگ زرد برای رمز عبور متوسط */
+    }
+    
+    .weak {
+      color: #ff0000; /* رنگ قرمز برای رمز عبور ضعیف */
+    }
+    
+    #error {
+      color: #ff0000; /* رنگ پیغام خطا */
+      font-size: 0.9em;
+    }
+    </style>
+    
+  </head>
+  <body>
+    <form action="#" class="box" method="post">
+      {% csrf_token %}
+      <h1>Login</h1>
+      <input type="text" id="username" name="username" placeholder="Username" />
+      <div id="username-error"></div>
+      <!-- پیغام خطای نام کاربری -->
+
+      <input
+        type="password"
+        id="password"
+        name="password"
+        placeholder="Password"
+      />
+      <div id="password-strength"></div>
+      <!-- وضعیت قدرت رمز عبور -->
+      <div id="password-error"></div>
+      <!-- پیغام خطای رمز عبور -->
+
+      <input type="submit" name="submit" value="Login" />
+    </form>
+
+    <script >document.getElementById("password").addEventListener("focus", function () {
+      document.getElementById("password-strength").classList.add("visible");
+      document.getElementById("password-error").classList.add("visible");
+      this.style.width = "280px"; // تغییر عرض فیلد رمز عبور به 280px
+    });
+    
+    document.getElementById("password").addEventListener("blur", function () {
+      document.getElementById("password-strength").classList.remove("visible");
+      document.getElementById("password-error").classList.remove("visible");
+      this.style.width = "200px"; // بازگشت عرض فیلد رمز عبور به 200px
+    });
+    
+    document.getElementById("username").addEventListener("focus", function () {
+      this.style.width = "280px"; // تغییر عرض فیلد نام کاربری به 280px
+    });
+    
+    document.getElementById("username").addEventListener("blur", function () {
+      this.style.width = "200px"; // بازگشت عرض فیلد نام کاربری به 200px
+    });
+    
+    document.getElementById("password").addEventListener("input", function () {
+      const password = this.value;
+      const strengthDisplay = document.getElementById("password-strength");
+      const passwordError = document.getElementById("password-error");
+    
+      let strength = 0;
+    
+      // بررسی وجود حداقل یک حرف بزرگ
+      if (/[A-Z]/.test(password)) {
+        strength++;
+      }
+    
+      // بررسی وجود حداقل یک عدد
+      if (/\d/.test(password)) {
+        strength++;
+      }
+    
+      // بررسی وجود حداقل یک علامت خاص مثل @ یا $
+      if (/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
+        strength++;
+      }
+    
+      // بررسی طول رمز عبور
+      if (password.length >= 8) {
+        strength++;
+        passwordError.textContent = ""; // حذف پیغام خطا اگر طول رمز عبور کافی است
+      } else {
+        passwordError.textContent = "Password must be at least 8 characters long.";
+      }
+    
+      // نمایش وضعیت قوی بودن رمز عبور
+      if (strength === 4) {
+        strengthDisplay.textContent = "Strong";
+        strengthDisplay.className = "strong visible"; // تغییر رنگ به سبز و نمایش
+      } else if (strength === 3) {
+        strengthDisplay.textContent = "Medium";
+        strengthDisplay.className = "medium visible"; // تغییر رنگ به زرد و نمایش
+      } else {
+        strengthDisplay.textContent = "Weak";
+        strengthDisplay.className = "weak visible"; // تغییر رنگ به قرمز و نمایش
+      }
+    });
+    
+    document.getElementById("password").addEventListener("input", function (e) {
+      this.value = this.value.replace(/[\u0600-\u06FF]/g, ""); // حذف کاراکترهای فارسی
+    });
+    
+    document.getElementById("username").addEventListener("input", function () {
+      const username = this.value;
+      const usernameError = document.getElementById("username-error");
+    
+      if (username.length >= 4) {
+        usernameError.textContent = ""; // حذف پیغام خطا اگر طول نام کاربری کافی است
+      } else {
+        usernameError.textContent = "Username must be at least 4 characters long.";
+      }
+    });
+    
+    document.getElementById("username").addEventListener("focus", function () {
+      this.style.width = "280px"; // تغییر عرض فیلد نام کاربری به 280px
+      document.getElementById("username-error").classList.add("visible"); // نمایش پیغام خطا هنگام فوکوس
+    });
+    
+    document.getElementById("username").addEventListener("blur", function () {
+      this.style.width = "200px"; // بازگشت عرض فیلد نام کاربری به 200px
+      document.getElementById("username-error").classList.remove("visible"); // پنهان کردن پیغام خطا هنگام از دست دادن فوکوس
+    });
+    </script>
+  </body>
+</html>
+{% endblock %}
+{% comment %} {% extends "base.html" %} {% block content %} {% load static %}
 <form method="POST" action="{% url "login" %}">
 {% csrf_token %}
   <div class="mb-3">
@@ -16,4 +245,4 @@
 
   <button type="submit" class="btn btn-primary">Submit</button>
 </form>
-{% endblock %}
+{% endblock %} {% endcomment %}

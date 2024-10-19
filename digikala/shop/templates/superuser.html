@@ -1,0 +1,34 @@
+{% load static %}
+{% include "base.html" %}
+{% block content %}
+
+
+    <!-- یک فرم برای ارسال اطلاعات -->
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create SuperUser</title>
+</head>
+<body>
+    <h2>Create SuperUser</h2>
+    <form method="POST">
+        {% csrf_token %}
+        
+        <!-- فیلد شماره تلفن -->
+        <label for="phone_numb">Phone Number:</label>
+        {{ form.phone_numb }}
+        <br><br>
+        
+        <!-- فیلد جنسیت -->
+        <label for="gender">Gender:</label>
+        {{ form.gender }}
+        <br><br>
+        
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
+
+{% endblock %}

@@ -1,4 +1,6 @@
-{% extends "base.html" %} {% block content %} {% load static %}
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
 <style>
   /* استایل برای لیست امتیازات */
   .score-list {
@@ -17,10 +19,6 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
 
-  .score-item p {
-    margin: 5px 0;
-  }
-
   .action-btn {
     display: inline-block;
     padding: 10px 20px;
@@ -35,33 +33,83 @@
     background-color: #0056b3;
   }
 </style>
-<h1>لیست امتیازات</h1>
 
 <div class="score-list">
-  {% if comp %}{% for score in all_score %}
-  <div class="score-item">
-    <p><strong>سوال:</strong> {{ score }}</p>
+  {% if comp %} 
+  erjkfnkjda
+    {% if sh_change %} 
+    fgrjie
+      {% if final_res %}
+        <div class="score-item">
+          <a href="{% url 'res' final_res %}" class="action-btn">نتیجه</a>
+        </div>
+      {% endif %}
+    {% endif %}
+  {% else %}
+    {% if awn|length > 0 %}
+      سوالات با جمع امتیاز بالای ده :
+      <br /><br />
+      {% for a in awn %}
+        {% with a as numbs %}
+          <a href="{% url 'ux' numbs %}" class="action-btn">سوالات بخش {{ numbs }}</a><br />
+        {% endwith %}
+      {% endfor %}
+      <a href="{% url 'scores' %}" class="action-btn">همه امتیاز ها مشاهده شود</a>
+    {% else %}
+      <!-- اگر سوالات بالای ده وجود ندارد، ثبت امتیاز -->
+    {% endif %}
+  {% endif %} 
+</div>
 
-    {% comment %}
-    <p><strong>بخش:</strong> {{ score.part_q }}</p>
-    <p><strong>امتیاز:</strong> {{ score.Score }}</p>
-    {% endcomment %}
-  </div>
-  {% endfor %} {% if final_res %}
-  <div class="score-item">
-    <a href="{% url 'res' final_res %}" class="action-btn">نتیجه</a>
-  </div>
-  {% endif %}{% endif %} {% if not comp %}
-  <div class="score-item">
-    <p>سوالاتی برای امتیازدهی باقی مانده است</p>
-    <a href="{% url 'ux' scores.0.main_q.id %}" class="action-btn"
-      >ثبت امتیاز</a
-    >
-  </div>
-  {% endif %}
-</div>
 {% if res_ind %}
+efndkewj
 <div class="score-item">
-  <a href="{% url 'res' res_ind %}" class="action-btn">ثبت امتیاز</a>
+  {% for n in x %} </br>{{ n.summery }}<br> {% endfor %}
+  <canvas id="myPieChart" width="1rem" height="2rem"></canvas>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    // داده‌های چارت را از Django به جاوااسکریپت منتقل کنید
+    const sortedInd = {{ sorted_ind|safe }}; // فرض بر این است که sorted_ind یک آرایه عددی است.
+
+    // تنظیمات چارت
+    const ctx = document.getElementById('myPieChart').getContext('2d');
+    const myPieChart = new Chart(ctx, {
+      type: 'pie',
+      data: {
+        labels: sortedInd.map((_, index) => 'مقدار ' + (index + 1)), // لیبل‌ها به صورت خودکار تولید می‌شوند
+        datasets: [{
+          data: sortedInd, // داده‌های چارت
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.6)',
+            'rgba(54, 162, 235, 0.6)',
+            'rgba(255, 206, 86, 0.6)',
+            'rgba(75, 192, 192, 0.6)',
+            'rgba(153, 102, 255, 0.6)',
+            'rgba(255, 159, 64, 0.6)',
+            'rgba(255, 99, 13, 0.6)',
+            '#000000',
+            'rgba(255, 206, 86, 0.6)',
+            '#000000',
+          ], // رنگ‌های بخش‌های چارت
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                const index = context.dataIndex; // ایندکس بخش
+                const value = context.raw; // مقدار بخش
+                return 'ایندکس: ' + index + ', مقدار: ' + value; // نمایش ایندکس و مقدار
+              }
+            }
+          }
+        }
+      }
+    });
+  </script>
 </div>
-{% endif %} {% endblock %}
+{% endif %}
+{% endblock %}

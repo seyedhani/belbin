@@ -1,142 +1,241 @@
-{% load static %} {% include "base.html" %} {% block content %}
+{% extends "base.html" %}
+{% block content %}
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>سوالات</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script>
-      $(document).ready(function () {
-        $("form").submit(function (event) {
-          event.preventDefault(); // جلوگیری از بارگذاری مجدد صفحه
-
-          var form = $(this);
-          $.ajax({
-            url: form.attr("action"),
-            type: "POST",
-            data: form.serialize(),
-            success: function (response) {
-              var messageElement = $("#message");
-              if (response.status === "error") {
-                messageElement
-                  .text(response.message)
-                  .removeClass()
-                  .addClass("error-message")
-                  .show();
-              } else if (response.status === "warning") {
-                messageElement
-                  .text(response.message)
-                  .removeClass()
-                  .addClass("warning-message")
-                  .show();
-              } else if (response.status === "success") {
-                messageElement
-                  .text(response.message)
-                  .removeClass()
-                  .addClass("success-message")
-                  .show();
-                // می‌توانید صفحه را به‌روزرسانی کنید یا به بخش دیگری هدایت کنید
-              }
-            },
-            error: function () {
-              $("#message")
-                .text("An error occurred")
-                .removeClass()
-                .addClass("error-message")
-                .show();
-            },
-          });
-        });
-      });
-    </script>
-    <style>
-      /* CSS داخلی */
-
-     
-
-      h1 {
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Survey</title>
+    <style>/* Container */
+      .container {
+        width: 100%;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 20px;
+        overflow-x: hidden;
+      }
+      
+      /* Dropdown */
+      .dropdown {
+        position: absolute; /* تغییر موقعیت به absolute */
+        top: 70px; /* فاصله از بالای باکس */
+        left: 74px; /* فاصله از چپ باکس */
+      }
+      
+      .dropbtn {
+        padding: 12px 24px;
+        background: linear-gradient(45deg, #4a90e2, #9013fe);
+        color: white;
+        border: none;
+        border-radius: 26px;
+        cursor: pointer;
+        font-size: 16px;
+        text-transform: uppercase;
+        transition: background 0.3s ease, box-shadow 0.3s ease;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        margin-bottom: 5px;
+      }
+      
+      .dropbtn:hover {
+        background: linear-gradient(45deg, #f65b2d, #ff6b6b);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+      }
+      
+      .dropdown-content {
+        display: none; /* پنهان است */
+        position: absolute;
+        left: 0px;
+        background-color: #fff;
+        min-width: 120px;
+        border-radius: 10px;
+        z-index: 1;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        max-height: 140px; /* حداکثر ارتفاع لیست */
+        overflow-y: auto; /* اسکرول عمودی */
+      }
+      
+      .dropdown-content a {
         color: #333;
-      }
-
-      .questions-container {
-   
-        margin-top: 20px;
-      }
-
-      .question-box {
-       
-        border: 1px solid #ddd;
-        padding: 15px;
-        margin-bottom: 15px;
-        border-radius: 5px;
-        background-color: #f9f9f9;
-      }
-
-      #message {
-        padding: 10px;
-        margin-bottom: 15px;
-        border-radius: 5px;
-        display: none; /* مخفی به صورت پیش‌فرض */
-      }
-
-      .error-message {
-        background-color: #f8d7da;
-        color: #721c24;
-      }
-
-      .warning-message {
-        background-color: #fff3cd;
-        color: #856404;
-      }
-
-      .success-message {
-        background-color: #d4edda;
-        color: #155724;
-      }
-
-      .action-btn {
-        display: inline-block;
-        padding: 10px 20px;
-        margin-top: 20px;
-        background-color: #007bff;
-        color: #fff;
+        padding: 12px 16px;
         text-decoration: none;
-        border-radius: 5px;
+        display: block;
+        text-align: center;
+        border-radius: 10px;
+        transition: background-color 0.3s ease;
       }
-
-      .action-btn:hover {
-        background-color: #0056b3;
+      
+      .dropdown-content a:hover {
+        background-color: #f1f1f1;
       }
+      
+      /* Box */
+      .box {
+        background: linear-gradient(135deg, #ff7e5f, #feb47b);
+        border-radius: 30px;
+        padding: 30px;
+        width: 95%;
+        max-width: 1200px;
+        margin-top: 37px;
+        text-align: right;
+        font-family: Arial, sans-serif;
+        direction: rtl;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3), 0 6px 6px rgba(0, 0, 0, 0.2);
+      }
+      
+      .box p {
+        font-size: 22px;
+        color: white;
+        margin-bottom: 20px;
+        letter-spacing: 1px;
+        cursor: default;
+      }
+      
+      /* Button */
+      .submit-btn {
+        padding: 15px 30px;
+        background: linear-gradient(45deg, #6a11cb, #2575fc);
+        color: white;
+        margin-top: 10px;
+        border: none;
+        border-radius: 50px;
+        cursor: pointer;
+        font-size: 16px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      }
+      
+      .submit-btn:hover {
+        background: linear-gradient(45deg, #2575fc, #6a11cb);
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+      }
+      
+      /* Rating */
+      .rating {
+        margin: 10px 0;
+        display: flex;
+        justify-content: flex-start;
+        gap: 10px;
+      }
+      
+      .rating-option {
+        display: inline-block;
+        width: 40px;
+        height: 40px;
+        background-color: #fff;
+        color: #333;
+        font-size: 18px;
+        font-weight: bold;
+        border-radius: 50%;
+        line-height: 40px;
+        text-align: center;
+        cursor: pointer;
+        transition: background 0.3s ease, transform 0.3s ease;
+        user-select: none;
+      }
+      
+      .rating-option:hover {
+        background-color: #3498db;
+        color: white;
+      }
+      
+      /* When clicked */
+      .rating-option.active {
+        background-color: #3498db;
+        color: white;
+      }
+      
+      /* Remove hover effect when active */
+      .rating-option.active:hover {
+        transform: none;
+      }
+      
+      .rating-option:active {
+        background-color: #2980b9;
+      }
+      
+      .rating-option.active:active {
+        background-color: #2980b9;
+      }
+      
     </style>
-  </head>
-  <body>
-    {% if main %}
+</head>
+<body>
+  {% if main %}
+  <h1 dir='rtl'>{{ main.title }}</h1>
+  {% endif %}
   
-
-    <h1 dir='rtl'>{{ main.title }}</h1>
-    {% endif %}
-    <div id="message"></div>
-    <!-- بخش نمایش پیام -->
-    <div class="questions-container" dir='rtl' >
-      {% for record in records %}
-      <div class="question-box"  >
-        
-        <p>{{ record.qtext }}</p>
-        <!-- فرم امتیازدهی برای هر سوال -->
-        <form method="POST" action=".">
+  <div id="message" style="color: red;"></div> <!-- بخش نمایش پیام -->
+  <div class="questions-container" dir='rtl'>
+      <form id="survey-form" method="POST" action=".">
           {% csrf_token %}
           <input type="hidden" name="question_id" value="{{ record.id }}" />
-          {{ form.as_p }}
-          <button type="submit" >ارسال امتیاز</button>
-        </form>
-      </div>
-      {% endfor %}
-    </div style="display:inline;">
-    {% for m in mq %}
-    <a href="{% url 'ux' m.id  %}" class="action-btn" >سوالات بخش {{m.id }}</a>
-    {% endfor %}
-    <a href="{% url 'show'   %}" class="action-btn" >done</a>
-  </body>
+          {% for record in records %}
+          <div class="question-block">
+              <fieldset>
+                  <legend>{{ record.qtext }}</legend>
+                  {% for score in "0123456789" %}
+                  <label>
+                      <input type="radio" name="rating_{{ record.id }}" value="{{ score }}" /> {{ score }} 
+                  </label>
+                  <br>
+                  {% endfor %}
+              </fieldset>
+          </div>
+          {% endfor %}
+          <button type="submit">ارسال امتیاز</button>
+      </form>
+  </div>
+  
+  {% for m in mq %}
+  <a href="{% url 'ux' m.id  %}" class="action-btn">سوالات بخش {{m.id }}</a>
+  {% endfor %}
+  <a href="{% url 'show' %}" class="action-btn">done</a>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            var totalScore = 0;
+
+            // نظارت بر تغییرات در گزینه‌های رادیویی
+            $("input[type='radio']").change(function () {
+                totalScore = 0;
+
+                // محاسبه مجموع امتیازات انتخاب شده
+                $("input[type='radio']:checked").each(function () {
+                    totalScore += parseInt($(this).val());
+                });
+
+                // بررسی اینکه آیا مجموع امتیازات بیش از ۱۰ است
+                if (totalScore > 10) {
+                  event.preventDefault();
+                  alert("مجموع امتیازات بیش از ۱۰ است. لطفا گزینه‌ها را تغییر دهید.");
+                } else {
+                    $("#message").text(""); // پاک کردن پیام اگر امتیاز زیر ۱۰ باشد
+                }
+
+                // حرکت به سوال بعدی بعد از انتخاب گزینه
+                var currentQuestion = $(this).closest('.question-block');
+                var nextQuestion = currentQuestion.next('.question-block');
+                if (nextQuestion.length) {
+                    $('html, body').animate({
+                        scrollTop: nextQuestion.offset().top
+                    }, 500);  // زمان اسکرول به میلی‌ثانیه (500 میلی‌ثانیه = نیم ثانیه)
+                }
+            });
+
+            // جلوگیری از ارسال فرم اگر مجموع امتیازات بیش از ۱۰ باشد
+            $("#survey-form").submit(function (event) {
+                if (totalScore > 10) {
+                    event.preventDefault(); // جلوگیری از ارسال فرم
+                    alert("مجموع امتیازات بیش از ۱۰ است. لطفا گزینه‌ها را تغییر دهید.");
+                }
+            });
+        });
+    </script>
+</body>
 </html>
 {% endblock %}

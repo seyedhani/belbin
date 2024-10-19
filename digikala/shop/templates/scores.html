@@ -1,0 +1,11 @@
+{% load static %} {% include "navbar.html" %} {% block content %}<br />
+<div dir="rtl">
+  {% for x in scores %} {% ifchanged x.main_q %}
+  <h1>{{ x.main_q }}:</h1>
+  {% with x.main_q.id as numbs %}
+  <a href="{% url 'ux' numbs %}" class="action-btn"> تغییر امتیاز </a><br />
+  {% endwith %} {% endifchanged %}
+  <p>{{ x.part_q }}, {{ x.Score }}</p>
+  {% endfor %}
+</div>
+{% endblock %}
